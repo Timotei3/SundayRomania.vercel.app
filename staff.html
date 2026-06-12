@@ -1,157 +1,207 @@
-```html
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Members | Sunday Romania</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Members | Sunday Romania</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .staff-rank {
+      background:#1c1b33;
+      border:1px solid #4c4680;
+      border-radius:14px;
+      padding:25px;
+      margin-bottom:22px;
+    }
+
+    .staff-rank h2 {
+      color:#fff;
+      font-size:26px;
+      margin-bottom:18px;
+    }
+
+    .staff-list {
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+    }
+
+    .staff-member {
+      background:#11111d;
+      border:1px solid #34345b;
+      border-radius:12px;
+      padding:16px;
+    }
+
+    .staff-member h3 {
+      color:white;
+      font-size:18px;
+      margin-bottom:8px;
+    }
+
+    .staff-member p {
+      color:#d8d8f0;
+      font-size:14px;
+      margin:5px 0;
+    }
+
+    .online {
+      color:#35d07f;
+      font-weight:800;
+    }
+
+    .offline {
+      color:#ff5f5f;
+      font-weight:800;
+    }
+
+    @media(max-width:1200px){
+      .staff-list {
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:700px){
+      .staff-list {
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <aside>
+    <div class="brand">
+      <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
+      <div class="brand-text">
+        <span>SUNDAY</span>
+        <strong>ROMANIA</strong>
+      </div>
+    </div>
 
-    <!-- SIDEBAR -->
-    <aside>
+    <p>GENERAL</p>
+    <a href="index.html">Dashboard</a>
+    <a href="regulament.html">Regulament</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="sugestii.html">Sugestii</a>
+    <a href="players.html">Players</a>
+    <a href="staff.html" class="active">Staff Members</a>
+    <a href="banati.html">Jucători Banați</a>
+    <a href="harta.html">Hartă</a>
 
-        <div class="brand">
-            <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
-            <div class="brand-text">
-                <span>SUNDAY</span>
-                <strong>ROMANIA</strong>
+    <p>FACȚIUNI</p>
+    <a href="factiuni.html">Facțiuni</a>
+  </aside>
+
+  <main>
+    <header>
+      <h2>Staff Members</h2>
+      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        Discord
+      </a>
+    </header>
+
+    <section class="news">
+      <div class="img">STAFF</div>
+      <div class="text">
+        <b>SUNDAY ROMANIA</b>
+        <h2>Echipa Administrativă</h2>
+        <p>Lista se actualizează automat cu statusul online/offline și orele de pe server.</p>
+        <span id="staffStatus">Se încarcă staff-ul...</span>
+      </div>
+    </section>
+
+    <div id="staffContainer"></div>
+  </main>
+
+  <script>
+    const STAFF_API_URL = "PUNE_API_UL_TAU_AICI";
+
+    const rankOrder = [
+      "Community Founder",
+      "Co-Founder",
+      "Supervisor",
+      "Head Of Staff",
+      "Head Admin",
+      "Administrator",
+      "Moderator Avansat",
+      "Moderator",
+      "Helper Avansat",
+      "Helper",
+      "Helper in Teste"
+    ];
+
+    const rankIcons = {
+      "Community Founder": "🔴",
+      "Co-Founder": "🔴",
+      "Supervisor": "⚪",
+      "Head Of Staff": "⚪",
+      "Head Admin": "🟤",
+      "Administrator": "🟠",
+      "Moderator Avansat": "🔵",
+      "Moderator": "🔵",
+      "Helper Avansat": "🟢",
+      "Helper": "🟢",
+      "Helper in Teste": "🟢"
+    };
+
+    async function loadStaff() {
+      const container = document.getElementById("staffContainer");
+      const status = document.getElementById("staffStatus");
+
+      try {
+        const response = await fetch(STAFF_API_URL + "?t=" + Date.now());
+
+        if (!response.ok) {
+          throw new Error("API error");
+        }
+
+        const staff = await response.json();
+
+        container.innerHTML = "";
+
+        rankOrder.forEach(rank => {
+          const members = staff.filter(member => member.rank === rank);
+
+          if (members.length === 0) return;
+
+          const section = document.createElement("section");
+          section.className = "staff-rank";
+
+          section.innerHTML = `
+            <h2>${rankIcons[rank] || "👤"} ${rank}</h2>
+
+            <div class="staff-list">
+              ${members.map(member => `
+                <div class="staff-member">
+                  <h3>${member.name}</h3>
+
+                  <p>Status:
+                    <span class="${member.online ? "online" : "offline"}">
+                      ${member.online ? "Online" : "Offline"}
+                    </span>
+                  </p>
+
+                  <p>Ore pe server: ${member.hours}</p>
+                </div>
+              `).join("")}
             </div>
-        </div>
+          `;
 
-        <p>GENERAL</p>
+          container.appendChild(section);
+        });
 
-        <a href="index.html">Dashboard</a>
-        <a href="regulament.html">Regulament</a>
-        <a href="magazin.html">Magazin</a>
-        <a href="sugestii.html">Sugestii</a>
-        <a href="players.html">Players</a>
-        <a href="staff.html" class="active">Staff Members</a>
-        <a href="banati.html">Jucători Banați</a>
-        <a href="harta.html">Hartă</a>
+        status.innerText = "Staff actualizat automat.";
 
-        <p>FACȚIUNI</p>
+      } catch (error) {
+        status.innerText = "Nu s-a putut încărca staff-ul. Verifică API-ul.";
+      }
+    }
 
-        <a href="factiuni.html">Facțiuni</a>
+    loadStaff();
 
-    </aside>
-
-    <!-- CONTENT -->
-    <main>
-
-        <header>
-            <h2>Staff Members</h2>
-
-            <a class="discord-btn"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-                Discord
-            </a>
-        </header>
-
-        <!-- INTRO -->
-
-        <section class="news">
-
-            <div class="img">
-                STAFF
-            </div>
-
-            <div class="text">
-
-                <b>SUNDAY ROMANIA</b>
-
-                <h2>Echipa Administrativă</h2>
-
-                <p>
-                    Staff-ul Sunday Romania este responsabil
-                    pentru menținerea unui roleplay de calitate,
-                    rezolvarea ticketelor și ajutorul oferit
-                    comunității.
-                </p>
-
-            </div>
-
-        </section>
-
-        <!-- STAFF GRID -->
-
-        <section class="shop-categories">
-
-            <div class="shop-category">
-                <h3>👑 Owner</h3>
-                <p>Nume Owner</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>⭐ Co-Owner</h3>
-                <p>Nume Co-Owner</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🛡️ Manager</h3>
-                <p>Nume Manager</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🔧 Head Admin</h3>
-                <p>Nume Head Admin</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🟣 Admin</h3>
-                <p>Nume Admin</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🔵 Moderator</h3>
-                <p>Nume Moderator</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🟢 Helper</h3>
-                <p>Nume Helper</p>
-            </div>
-
-            <div class="shop-category">
-                <h3>🟡 Trial Helper</h3>
-                <p>Nume Trial</p>
-            </div>
-
-        </section>
-
-        <!-- INFO -->
-
-        <section class="news">
-
-            <div class="img">
-                INFO
-            </div>
-
-            <div class="text">
-
-                <b>IMPORTANT</b>
-
-                <h2>Ai nevoie de ajutor?</h2>
-
-                <p>
-                    Dacă întâmpini probleme pe server,
-                    deschide un ticket pe Discord sau
-                    contactează un membru al staff-ului.
-                </p>
-
-                <span>
-                    Sunday Romania Roleplay • Staff Oficial
-                </span>
-
-            </div>
-
-        </section>
-
-    </main>
-
+    setInterval(loadStaff, 60000);
+  </script>
 </body>
 </html>
-```
