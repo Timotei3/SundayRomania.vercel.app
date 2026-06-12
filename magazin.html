@@ -1,263 +1,148 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magazin | Sunday Romania</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magazin | Sunday Romania</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .shop-category,
+    .vip-card {
+      text-decoration: none !important;
+      color: inherit !important;
+      cursor: pointer;
+      display: block;
+    }
+
+    .shop-category *,
+    .vip-card * {
+      text-decoration: none !important;
+    }
+
+    .shop-category:hover,
+    .vip-card:hover {
+      transform: translateY(-3px);
+      transition: 0.2s ease;
+      border-color: #a855f7;
+    }
+  </style>
 </head>
 
 <body>
-
-    <aside>
-
-        <div class="brand">
-            <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
-            <div class="brand-text">
-                <span>SUNDAY</span>
-                <strong>ROMANIA</strong>
-            </div>
-        </div>
-
-        <p>GENERAL</p>
-
-        <a href="index.html">Dashboard</a>
-        <a href="regulament.html">Regulament</a>
-        <a href="magazin.html" class="active">Magazin</a>
-        <a href="sugestii.html">Sugestii</a>
-        <a href="players.html">Players</a>
-        <a href="staff.html">Staff Members</a>
-        <a href="banati.html">Jucători Banați</a>
-        <a href="harta.html">Hartă</a>
-
-        <p>FACȚIUNI</p>
-
-        <a href="factiuni.html">Facțiuni</a>
-
-    </aside>
-
-    <main>
-
-        <header>
-            <h2>Magazin</h2>
-
-            <a href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank"
-               class="discord-btn">
-               Login cu Discord
-            </a>
-        </header>
-
-        <!-- Categorii -->
-
-        <section class="shop-categories">
-
-            <a class="shop-category"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>VIP</h3>
-
-                <p>
-                    Vezi toate pachetele VIP disponibile.
-                    Apasă pentru a deschide un ticket.
-                </p>
-
-            </a>
-
-            <a class="shop-category"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Mașini Custom</h3>
-
-                <p>
-                    Solicită vehicule personalizate pentru
-                    serverul Sunday Romania.
-                </p>
-
-            </a>
-
-            <a class="shop-category"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Case Custom</h3>
-
-                <p>
-                    Achiziționează proprietăți și case
-                    exclusive prin Discord.
-                </p>
-
-            </a>
-
-            <a class="shop-category"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Haine Custom</h3>
-
-                <p>
-                    Uniforme, haine și accesorii
-                    personalizate pentru caracterul tău.
-                </p>
-
-            </a>
-
-        </section>
-
-        <!-- VIP -->
-
-        <section class="news">
-
-            <div class="img">
-                VIP
-            </div>
-
-            <div class="text">
-
-                <b>PREMIUM</b>
-
-                <h2>Pachete VIP Sunday Romania</h2>
-
-                <p>
-                    Toate pachetele VIP se achiziționează
-                    prin intermediul serverului nostru de Discord.
-                    După deschiderea unui ticket vei primi toate
-                    informațiile necesare.
-                </p>
-
-                <span>
-                    Discord:
-                    https://discord.gg/Z9EnZnHhjQ
-                </span>
-
-            </div>
-
-        </section>
-
-        <!-- Bronze -->
-
-        <section class="vip-grid">
-
-            <a class="vip-card"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Bronze</h3>
-
-                <p>
-                    Pachet de bază pentru jucători noi.
-                </p>
-
-                <span class="vip-price">
-                    Deschide Ticket
-                </span>
-
-            </a>
-
-            <a class="vip-card"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Gold</h3>
-
-                <p>
-                    Beneficii suplimentare și bonusuri.
-                </p>
-
-                <span class="vip-price">
-                    Deschide Ticket
-                </span>
-
-            </a>
-
-            <a class="vip-card"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Platinum</h3>
-
-                <p>
-                    Acces la funcții și avantaje premium.
-                </p>
-
-                <span class="vip-price">
-                    Deschide Ticket
-                </span>
-
-            </a>
-
-            <a class="vip-card"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Diamond</h3>
-
-                <p>
-                    Pachet exclusiv pentru susținători.
-                </p>
-
-                <span class="vip-price">
-                    Deschide Ticket
-                </span>
-
-            </a>
-
-            <a class="vip-card"
-               href="https://discord.gg/Z9EnZnHhjQ"
-               target="_blank">
-
-                <h3>Emerald</h3>
-
-                <p>
-                    Cel mai avansat pachet disponibil.
-                </p>
-
-                <span class="vip-price">
-                    Deschide Ticket
-                </span>
-
-            </a>
-
-        </section>
-
-        <!-- Informații -->
-
-        <section class="news">
-
-            <div class="img">
-                SHOP
-            </div>
-
-            <div class="text">
-
-                <b>INFORMAȚII</b>
-
-                <h2>Cum cumpăr?</h2>
-
-                <p>
-                    1. Intră pe Discord.<br><br>
-
-                    2. Creează un ticket.<br><br>
-
-                    3. Spune ce produs dorești
-                    (VIP, Mașină Custom,
-                    Casă Custom sau Haine Custom).<br><br>
-
-                    4. Un membru Staff îți va răspunde
-                    cât mai rapid.
-                </p>
-
-                <span>
-                    Apasă pe orice categorie pentru a merge direct pe Discord →
-                </span>
-
-            </div>
-
-        </section>
-
-    </main>
-
+  <aside>
+    <div class="brand">
+      <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
+      <div class="brand-text">
+        <span>SUNDAY</span>
+        <strong>ROMANIA</strong>
+      </div>
+    </div>
+
+    <p>GENERAL</p>
+
+    <a href="index.html">Dashboard</a>
+    <a href="regulament.html">Regulament</a>
+    <a href="magazin.html" class="active">Magazin</a>
+    <a href="sugestii.html">Sugestii</a>
+    <a href="players.html">Players</a>
+    <a href="staff.html">Staff Members</a>
+    <a href="banati.html">Jucători Banați</a>
+    <a href="harta.html">Hartă</a>
+
+    <p>FACȚIUNI</p>
+    <a href="factiuni.html">Facțiuni</a>
+  </aside>
+
+  <main>
+    <header>
+      <h2>Magazin</h2>
+      <a href="https://discord.gg/Z9EnZnHhjQ" target="_blank" class="discord-btn">
+        Login cu Discord
+      </a>
+    </header>
+
+    <section class="shop-categories">
+      <a class="shop-category" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>VIP</h3>
+        <p>Vezi toate pachetele VIP disponibile.</p>
+      </a>
+
+      <a class="shop-category" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Mașini Custom</h3>
+        <p>Solicită vehicule personalizate pentru server.</p>
+      </a>
+
+      <a class="shop-category" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Case Custom</h3>
+        <p>Achiziționează proprietăți exclusive.</p>
+      </a>
+
+      <a class="shop-category" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Haine Custom</h3>
+        <p>Haine și accesorii personalizate.</p>
+      </a>
+    </section>
+
+    <section class="news">
+      <div class="img">VIP</div>
+      <div class="text">
+        <b>PREMIUM</b>
+        <h2>Pachete VIP</h2>
+        <p>
+          Alege pachetul VIP potrivit pentru tine și bucură-te de beneficii speciale
+          pe serverul Sunday Romania Roleplay.
+        </p>
+        <span>Deschide ticket pe Discord pentru achiziție →</span>
+      </div>
+    </section>
+
+    <section class="vip-grid">
+      <a class="vip-card" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Bronze</h3>
+        <p>Pachet de bază pentru jucători noi.</p>
+        <span class="vip-price">Deschide Ticket</span>
+      </a>
+
+      <a class="vip-card" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Gold</h3>
+        <p>Beneficii suplimentare și bonusuri speciale.</p>
+        <span class="vip-price">Deschide Ticket</span>
+      </a>
+
+      <a class="vip-card" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Platinum</h3>
+        <p>Acces la funcții și avantaje premium.</p>
+        <span class="vip-price">Deschide Ticket</span>
+      </a>
+
+      <a class="vip-card" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Diamond</h3>
+        <p>Pachet exclusiv pentru susținători.</p>
+        <span class="vip-price">Deschide Ticket</span>
+      </a>
+
+      <a class="vip-card" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
+        <h3>Emerald</h3>
+        <p>Cel mai avansat pachet disponibil.</p>
+        <span class="vip-price">Deschide Ticket</span>
+      </a>
+    </section>
+
+    <section class="news">
+      <div class="img">SHOP</div>
+      <div class="text">
+        <b>INFORMAȚII</b>
+        <h2>Cum cumpăr?</h2>
+        <p>
+          1. Intră pe Discord.<br><br>
+          2. Creează un ticket.<br><br>
+          3. Spune ce produs dorești: VIP, Mașină Custom, Casă Custom sau Haine Custom.<br><br>
+          4. Un membru Staff îți va răspunde cât mai rapid.
+        </p>
+        <span>Apasă pe orice categorie pentru a merge direct pe Discord →</span>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
