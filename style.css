@@ -1,4 +1,3 @@
-```css
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 *{
@@ -6,6 +5,10 @@
   padding:0;
   box-sizing:border-box;
   font-family:'Inter',Arial,sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
@@ -20,7 +23,7 @@ aside{
   width:315px;
   background:#11111d;
   border-right:1px solid #25253d;
-  padding:25px 22px;
+  padding:22px 20px;
   min-height:100vh;
 }
 
@@ -32,25 +35,30 @@ aside{
 }
 
 .brand-logo{
-  width:64px;
-  height:64px;
+  width:72px;
+  height:auto;
   object-fit:contain;
 }
 
-.brand-text span{
-  display:block;
-  color:#9b4dff;
-  font-size:18px;
-  font-weight:800;
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
   line-height:1;
 }
 
+.brand-text span{
+  color:#b14cff;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
 .brand-text strong{
-  display:block;
   color:white;
   font-size:22px;
   font-weight:800;
-  line-height:1;
+  letter-spacing:1px;
 }
 
 aside p{
@@ -107,7 +115,7 @@ button{
   cursor:pointer;
 }
 
-/* DASHBOARD CARDS */
+/* DASHBOARD */
 .cards{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -134,7 +142,6 @@ button{
   color:#ddd;
 }
 
-/* PANELS */
 .news,
 .panel{
   display:grid;
@@ -200,23 +207,150 @@ button{
 }
 
 /* REGULAMENT PAGE */
-.regulament-page{
-  background:#12121d;
+.rules-page{
+  display:block;
+  background:#1f1f1f;
+  color:#f1f1f1;
 }
 
-.regulament-page .panel{
-  grid-template-columns:1fr;
-  max-width:1000px;
+.rules-layout{
+  display:grid;
+  grid-template-columns:230px minmax(560px,760px) 250px;
+  gap:46px;
+  max-width:1260px;
+  margin:0 auto;
+  padding:0 28px 70px;
 }
 
-.regulament-page .text h2{
-  color:#b8a7ff;
-  margin-top:20px;
+.rules-left{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  padding:14px 0 24px;
 }
 
-.regulament-page .text p{
-  border-bottom:1px solid #34345b;
-  padding-bottom:15px;
+.rules-left img{
+  width:42px;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 44px;
+}
+
+.rules-left a{
+  display:block;
+  color:#d6d6d6;
+  text-decoration:none;
+  font-size:13px;
+  padding:8px 0;
+}
+
+.rules-left a:hover,
+.rules-left a.active{
+  color:#8e8bff;
+}
+
+.rules-content{
+  padding:0 0 80px;
+}
+
+.search{
+  width:100%;
+  height:34px;
+  background:#232323;
+  border:1px solid #4a4a4a;
+  border-radius:8px;
+  color:white;
+  padding:0 14px;
+  margin:0 0 36px;
+  font-size:13px;
+}
+
+.rule-block{
+  border-bottom:1px solid #444;
+  padding:30px 0 32px;
+}
+
+.rule-block h2{
+  color:#9692ff;
+  text-align:center;
+  font-size:21px;
+  font-weight:800;
+  margin-bottom:22px;
+}
+
+.rule-block p{
+  color:#f0f0f0;
+  font-size:14px;
+  line-height:1.75;
+  margin-bottom:15px;
+}
+
+.rule-block b{
+  display:block;
+  color:#fff;
+  font-size:14px;
+  margin:14px 0 8px;
+}
+
+.rule-block ul{
+  color:#f0f0f0;
+  margin-left:22px;
+  line-height:1.75;
+  font-size:14px;
+}
+
+.note{
+  background:#2b2b2b;
+  color:#e1e1e1;
+  border-radius:5px;
+  padding:12px 14px;
+  margin:18px 0;
+  font-size:12px;
+}
+
+.warning{
+  background:#2f261b;
+  color:#ffd59a;
+  border-radius:5px;
+  padding:12px 14px;
+  margin:18px 0;
+  font-size:12px;
+}
+
+.rules-right{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:auto;
+  padding-top:62px;
+}
+
+.rules-right h4{
+  color:#f0f0f0;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  margin-bottom:12px;
+}
+
+.rules-right a{
+  display:block;
+  color:#d0d0d0;
+  text-decoration:none;
+  font-size:12px;
+  padding:7px 0;
+}
+
+.rules-right a:hover{
+  color:#9692ff;
+}
+
+.rules-help{
+  margin-top:24px;
+  color:#aaa;
+  font-size:12px;
 }
 
 /* TABLE */
@@ -240,22 +374,6 @@ button{
   color:#bda7ff;
 }
 
-/* FORMS */
-.input,
-textarea{
-  width:100%;
-  background:#11111d;
-  border:1px solid #34345b;
-  color:white;
-  padding:14px;
-  border-radius:8px;
-  margin-bottom:12px;
-}
-
-textarea{
-  min-height:140px;
-}
-
 /* RESPONSIVE */
 @media(max-width:1200px){
   .cards{
@@ -265,6 +383,14 @@ textarea{
   .news,
   .panel{
     grid-template-columns:1fr;
+  }
+
+  .rules-layout{
+    grid-template-columns:210px 1fr;
+  }
+
+  .rules-right{
+    display:none;
   }
 }
 
@@ -287,5 +413,16 @@ textarea{
     align-items:flex-start;
     gap:15px;
   }
+
+  .rules-layout{
+    display:block;
+    padding:18px;
+  }
+
+  .rules-left{
+    position:relative;
+    height:auto;
+    border-bottom:1px solid #333;
+    margin-bottom:20px;
+  }
 }
-```
