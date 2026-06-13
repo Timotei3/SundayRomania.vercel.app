@@ -631,3 +631,29 @@ textarea{
   color:#ff5f5f;
   font-weight:800;
 }
+
+.turf {
+  position: absolute;
+  border: 3px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.turf span {
+  display: none;
+  position: absolute;
+  background: #080812;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  top: -45px;
+  left: 0;
+  white-space: nowrap;
+  border: 1px solid #333;
+}
+
+.turf:hover span {
+  display: block;
+}
