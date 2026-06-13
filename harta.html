@@ -1,1 +1,478 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunday Romania - Harta</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#050510;
+    color:white;
+    overflow:hidden;
+}
+
+#app{
+    width:100vw;
+    height:100vh;
+    position:relative;
+    background:#060814;
+}
+
+/* HARTA */
+#mapContainer{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    position:relative;
+    cursor:grab;
+}
+
+#mapContainer:active{
+    cursor:grabbing;
+}
+
+#mapContent{
+    position:absolute;
+    left:0;
+    top:0;
+    width:8192px;
+    height:8192px;
+    transform-origin:0 0;
+}
+
+/* AICI PUI HARTA TA 8192x8192 */
+#mapImage{
+    width:8192px;
+    height:8192px;
+    object-fit:cover;
+    user-select:none;
+    pointer-events:none;
+}
+
+/* LOGO SUS STÂNGA */
+.logoBox{
+    position:absolute;
+    top:30px;
+    left:30px;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logoBox img{
+    width:95px;
+    height:95px;
+    object-fit:contain;
+}
+
+.logoText{
+    font-size:36px;
+    font-weight:900;
+    line-height:34px;
+    text-shadow:0 0 12px black;
+}
+
+.logoText span{
+    color:#d946ef;
+    letter-spacing:4px;
+}
+
+/* LEGENDA DREAPTA JOS */
+.legend{
+    position:absolute;
+    right:35px;
+    bottom:35px;
+    z-index:50;
+    background:rgba(8,10,20,.9);
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:12px;
+    padding:22px;
+    width:280px;
+}
+
+.legend h2{
+    font-size:24px;
+    margin-bottom:18px;
+}
+
+.legendItem{
+    display:flex;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.legendColor{
+    width:28px;
+    height:28px;
+    border-radius:4px;
+    border:2px solid;
+}
+
+.red{
+    background:rgba(239,68,68,.45);
+    border-color:#ef4444;
+}
+
+.green{
+    background:rgba(34,197,94,.45);
+    border-color:#22c55e;
+}
+
+/* TURFURI */
+.turf{
+    position:absolute;
+    border:5px solid #22c55e;
+    background:rgba(34,197,94,.18);
+    border-radius:18px;
+    z-index:20;
+    cursor:pointer;
+    box-shadow:0 0 18px rgba(34,197,94,.8);
+}
+
+.turf:hover{
+    background:rgba(34,197,94,.35);
+}
+
+.turfTooltip{
+    display:none;
+    position:absolute;
+    top:-95px;
+    left:0;
+    background:#080812;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:12px;
+    min-width:210px;
+    font-size:18px;
+    z-index:100;
+}
+
+.turf:hover .turfTooltip{
+    display:block;
+}
+
+.owner{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+/* BUTOANE ZOOM */
+.controls{
+    position:absolute;
+    top:30px;
+    right:30px;
+    z-index:60;
+    display:flex;
+    gap:10px;
+}
+
+.controls button{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:8px;
+    background:#111827;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+    border:1px solid #333;
+}
+
+.controls button:hover{
+    background:#7c3aed;
+}
+
+/* INFO JOS */
+.tip{
+    position:absolute;
+    bottom:35px;
+    left:35px;
+    z-index:60;
+    background:rgba(8,10,20,.85);
+    padding:12px 18px;
+    border-radius:8px;
+    color:#ccc;
+    border:1px solid #333;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <div id="mapContainer">
+        <div id="mapContent">
+            <!-- SCHIMBĂ NUMELE IMAGINII DACĂ VREI -->
+            <img id="mapImage" src="harta.png" alt="Harta Sunday Romania">
+        </div>
+    </div>
+
+    <div class="logoBox">
+        <!-- PUNE LOGO-UL TĂU CU NUMELE SundayRomania.png -->
+        <img src="SundayRomania.png" alt="Sunday Romania">
+        <div class="logoText">
+            SUNDAY<br>
+            <span>ROMANIA</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="zoomIn()">+</button>
+        <button onclick="zoomOut()">−</button>
+        <button onclick="resetMap()">⟳</button>
+    </div>
+
+    <div class="legend">
+        <h2>LEGENDA</h2>
+
+        <div class="legendItem">
+            <div class="legendColor red"></div>
+            <div>
+                <b>ZONA RAUFAMATA</b><br>
+                <small>Zone periculoase / controlate</small>
+            </div>
+        </div>
+
+        <div class="legendItem">
+            <div class="legendColor green"></div>
+            <div>
+                <b>ZONA PUBLICA</b><br>
+                <small>Zone sigure / publice</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="tip">
+        Scroll = zoom | Click + drag = miști harta | Turfurile sunt editabile din cod
+    </div>
+
+</div>
+
+<script>
+/*
+====================================================
+CONFIGURARE TURFURI
+Toate sunt momentan ocupate de Sindicat.
+
+x, y, w, h sunt coordonate pe harta 8192x8192.
+Ca să muți un turf, schimbi x și y.
+Ca să îl mărești/micșorezi, schimbi w și h.
+Ca să schimbi mafia, modifici owner.
+====================================================
+*/
+
+const turfuri = [
+    {
+        id: 1,
+        name: "Turf Aeroport Nord",
+        owner: "Sindicat",
+        x: 3850,
+        y: 2450,
+        w: 620,
+        h: 250
+    },
+    {
+        id: 2,
+        name: "Turf Aeroport Sud",
+        owner: "Sindicat",
+        x: 4470,
+        y: 2450,
+        w: 620,
+        h: 250
+    },
+    {
+        id: 3,
+        name: "Turf Vinewood",
+        owner: "Sindicat",
+        x: 3150,
+        y: 4050,
+        w: 520,
+        h: 520
+    },
+    {
+        id: 4,
+        name: "Turf Downtown",
+        owner: "Sindicat",
+        x: 3150,
+        y: 5450,
+        w: 650,
+        h: 420
+    },
+    {
+        id: 5,
+        name: "Turf Vespucci",
+        owner: "Sindicat",
+        x: 2250,
+        y: 5650,
+        w: 360,
+        h: 260
+    },
+    {
+        id: 6,
+        name: "Turf La Puerta",
+        owner: "Sindicat",
+        x: 2380,
+        y: 6250,
+        w: 330,
+        h: 430
+    },
+    {
+        id: 7,
+        name: "Turf East LS",
+        owner: "Sindicat",
+        x: 4420,
+        y: 5900,
+        w: 350,
+        h: 430
+    },
+    {
+        id: 8,
+        name: "Turf South LS",
+        owner: "Sindicat",
+        x: 4450,
+        y: 6820,
+        w: 350,
+        h: 460
+    }
+];
+
+/* CULORI PE MAFII */
+const mafiaColors = {
+    "Sindicat": "#22c55e",
+    "Nortenos": "#ef4444",
+    "Sons of Anarchy": "#f97316",
+    "Hitman": "#a855f7",
+    "Public": "#3b82f6",
+    "Liber": "#9ca3af"
+};
+
+const mapContent = document.getElementById("mapContent");
+const mapContainer = document.getElementById("mapContainer");
+
+/* ADAUGĂ TURFURILE PE HARTĂ */
+function loadTurfs(){
+    turfuri.forEach(turf => {
+        const color = mafiaColors[turf.owner] || "#22c55e";
+
+        const div = document.createElement("div");
+        div.className = "turf";
+        div.style.left = turf.x + "px";
+        div.style.top = turf.y + "px";
+        div.style.width = turf.w + "px";
+        div.style.height = turf.h + "px";
+        div.style.borderColor = color;
+        div.style.background = color + "33";
+        div.style.boxShadow = `0 0 22px ${color}`;
+
+        div.innerHTML = `
+            <div class="turfTooltip">
+                <b>${turf.name}</b><br>
+                Deținut de: <span class="owner">${turf.owner}</span><br>
+                ID Turf: ${turf.id}
+            </div>
+        `;
+
+        div.onclick = () => {
+            alert(
+                turf.name +
+                "\\nDeținut de: " + turf.owner +
+                "\\nID Turf: " + turf.id
+            );
+        };
+
+        mapContent.appendChild(div);
+    });
+}
+
+loadTurfs();
+
+/* ZOOM ȘI DRAG */
+let scale = 0.16;
+let posX = 140;
+let posY = -210;
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+
+function updateTransform(){
+    mapContent.style.transform =
+        `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
+updateTransform();
+
+mapContainer.addEventListener("wheel", function(e){
+    e.preventDefault();
+
+    const zoomSpeed = 0.08;
+    const oldScale = scale;
+
+    if(e.deltaY < 0){
+        scale += zoomSpeed;
+    }else{
+        scale -= zoomSpeed;
+    }
+
+    scale = Math.max(0.08, Math.min(scale, 2.5));
+
+    const rect = mapContainer.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    posX = mouseX - (mouseX - posX) * (scale / oldScale);
+    posY = mouseY - (mouseY - posY) * (scale / oldScale);
+
+    updateTransform();
+});
+
+mapContainer.addEventListener("mousedown", function(e){
+    isDragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+});
+
+window.addEventListener("mouseup", function(){
+    isDragging = false;
+});
+
+window.addEventListener("mousemove", function(e){
+    if(!isDragging) return;
+
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+
+    updateTransform();
+});
+
+function zoomIn(){
+    scale += 0.15;
+    scale = Math.min(scale, 2.5);
+    updateTransform();
+}
+
+function zoomOut(){
+    scale -= 0.15;
+    scale = Math.max(scale, 0.08);
+    updateTransform();
+}
+
+function resetMap(){
+    scale = 0.16;
+    posX = 140;
+    posY = -210;
+    updateTransform();
+}
+</script>
+
+</body>
+</html>
