@@ -5,69 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Members | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    .staff-rank {
-      background:#1c1b33;
-      border:1px solid #4c4680;
-      border-radius:14px;
-      padding:25px;
-      margin-bottom:22px;
-    }
-
-    .staff-rank h2 {
-      color:#fff;
-      font-size:26px;
-      margin-bottom:18px;
-    }
-
-    .staff-list {
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:14px;
-    }
-
-    .staff-member {
-      background:#11111d;
-      border:1px solid #34345b;
-      border-radius:12px;
-      padding:16px;
-    }
-
-    .staff-member h3 {
-      color:white;
-      font-size:18px;
-      margin-bottom:8px;
-    }
-
-    .staff-member p {
-      color:#d8d8f0;
-      font-size:14px;
-      margin:5px 0;
-    }
-
-    .online {
-      color:#35d07f;
-      font-weight:800;
-    }
-
-    .offline {
-      color:#ff5f5f;
-      font-weight:800;
-    }
-
-    @media(max-width:1200px){
-      .staff-list {
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:700px){
-      .staff-list {
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -97,9 +34,7 @@
   <main>
     <header>
       <h2>Staff Members</h2>
-      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
-        Discord
-      </a>
+      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">Discord</a>
     </header>
 
     <section class="news">
@@ -107,7 +42,7 @@
       <div class="text">
         <b>SUNDAY ROMANIA</b>
         <h2>Echipa Administrativă</h2>
-        <p>Lista se actualizează automat cu statusul online/offline și orele de pe server.</p>
+        <p>Staff-ul se actualizează automat din API: online/offline și ore jucate.</p>
         <span id="staffStatus">Se încarcă staff-ul...</span>
       </div>
     </section>
@@ -116,7 +51,7 @@
   </main>
 
   <script>
-    const STAFF_API_URL = "PUNE_API_UL_TAU_AICI";
+    const STAFF_API_URL = "http://91.200.220.10:30176/staff";
 
     const rankOrder = [
       "Community Founder",
@@ -146,6 +81,15 @@
       "Helper in Teste": "🟢"
     };
 
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
     async function loadStaff() {
       const container = document.getElementById("staffContainer");
       const status = document.getElementById("staffStatus");
@@ -159,48 +103,74 @@
 
         const staff = await response.json();
 
+        if (!Array.isArray(staff)) {
+          throw new Error("API-ul nu returnează listă JSON.");
+        }
+
         container.innerHTML = "";
+
+        let totalMembers = 0;
 
         rankOrder.forEach(rank => {
           const members = staff.filter(member => member.rank === rank);
 
           if (members.length === 0) return;
 
+          totalMembers += members.length;
+
+          const cards = members.map(member => {
+            const name = escapeHTML(member.name || "Necunoscut");
+            const hours = Number(member.hours || 0);
+            const online = member.online === true;
+
+            return `
+              <div class="staff-member">
+                <h3>${name}</h3>
+                <p>Status:
+                  <span class="${online ? "online" : "offline"}">
+                    ${online ? "Online" : "Offline"}
+                  </span>
+                </p>
+                <p>Ore pe server: ${hours}</p>
+              </div>
+            `;
+          }).join("");
+
           const section = document.createElement("section");
           section.className = "staff-rank";
-
           section.innerHTML = `
             <h2>${rankIcons[rank] || "👤"} ${rank}</h2>
-
             <div class="staff-list">
-              ${members.map(member => `
-                <div class="staff-member">
-                  <h3>${member.name}</h3>
-
-                  <p>Status:
-                    <span class="${member.online ? "online" : "offline"}">
-                      ${member.online ? "Online" : "Offline"}
-                    </span>
-                  </p>
-
-                  <p>Ore pe server: ${member.hours}</p>
-                </div>
-              `).join("")}
+              ${cards}
             </div>
           `;
 
           container.appendChild(section);
         });
 
+        if (totalMembers === 0) {
+          container.innerHTML = `
+            <section class="staff-rank">
+              <h2>Nu există staff afișat</h2>
+              <p>API-ul funcționează, dar nu a returnat membri staff.</p>
+            </section>
+          `;
+        }
+
         status.innerText = "Staff actualizat automat.";
 
       } catch (error) {
         status.innerText = "Nu s-a putut încărca staff-ul. Verifică API-ul.";
+        container.innerHTML = `
+          <section class="staff-rank">
+            <h2>API neconectat</h2>
+            <p>Verifică dacă resource-ul staff_api este pornit și dacă linkul API este corect.</p>
+          </section>
+        `;
       }
     }
 
     loadStaff();
-
     setInterval(loadStaff, 60000);
   </script>
 </body>
