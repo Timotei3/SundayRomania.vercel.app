@@ -582,3 +582,52 @@ textarea{
     grid-template-columns:1fr;
   }
 }
+
+.staff-rank{
+  background:#1c1b33;
+  border:1px solid #4c4680;
+  border-radius:14px;
+  padding:25px;
+  margin-bottom:22px;
+}
+
+.staff-rank h2{
+  color:#fff;
+  font-size:26px;
+  margin-bottom:18px;
+}
+
+.staff-list{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.staff-member{
+  background:#11111d;
+  border:1px solid #34345b;
+  border-radius:12px;
+  padding:16px;
+}
+
+.staff-member h3{
+  color:white;
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+.staff-member p{
+  color:#d8d8f0;
+  font-size:14px;
+  margin:5px 0;
+}
+
+.online{
+  color:#35d07f;
+  font-weight:800;
+}
+
+.offline{
+  color:#ff5f5f;
+  font-weight:800;
+}
