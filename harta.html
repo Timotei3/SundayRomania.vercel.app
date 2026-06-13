@@ -1,85 +1,583 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sunday Romania - Harta Interactivă</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunday Romania - Harta</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
-body{background:#050713;color:#fff;overflow:hidden}
-.app{display:flex;width:100vw;height:100vh;background:#050713}
-.sidebar{width:270px;background:linear-gradient(180deg,#090d18,#060814);border-right:1px solid #20283a;padding:20px;display:flex;flex-direction:column;justify-content:space-between;z-index:100}
-.logoBox{display:flex;align-items:center;gap:12px;margin-bottom:35px}.logoBox img{width:78px;height:78px;object-fit:contain}.logoBox h1{font-size:25px;line-height:27px}.logoBox span{color:#d946ef;letter-spacing:3px}.menuTitle{color:#a855f7;font-size:12px;margin:22px 0 10px;text-transform:uppercase}.menu a{display:block;padding:14px;border-radius:8px;color:#cbd5e1;text-decoration:none;margin-bottom:6px;cursor:pointer}.menu a.active,.menu a:hover{background:linear-gradient(90deg,#35176b,#231044);color:#fff}.status{background:#0d1322;border:1px solid #273149;border-radius:10px;padding:15px;font-size:14px;color:#cbd5e1}.online{color:#22c55e;font-weight:bold}.main{flex:1;display:flex;background:#050713}.mapSection{flex:1;position:relative;overflow:hidden}.topbar{height:58px;background:#080c16;border-bottom:1px solid #20283a;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:90;position:relative}.controls{display:flex;gap:8px}.controls button{background:#111827;color:#fff;border:1px solid #334155;border-radius:8px;width:42px;height:36px;font-size:20px;cursor:pointer}.controls button:hover{background:#7c3aed}#mapView{position:relative;width:100%;height:calc(100vh - 58px);overflow:hidden;cursor:grab;background:#07101d}#mapView:active{cursor:grabbing}#mapContent{position:absolute;left:0;top:0;width:8192px;height:8192px;transform-origin:0 0}#mapImage{position:absolute;left:0;top:0;width:8192px;height:8192px;user-select:none;pointer-events:none}.turf{position:absolute;border:5px solid #22c55e;background:rgba(34,197,94,.18);border-radius:16px;box-shadow:0 0 18px #22c55e;cursor:pointer;z-index:20}.turf:hover{background:rgba(34,197,94,.35);z-index:40}.turfInfo{display:none;position:absolute;top:-92px;left:0;background:#070b14;border:1px solid #334155;border-radius:10px;padding:10px;min-width:210px;font-size:18px;z-index:100;box-shadow:0 0 20px #000}.turf:hover .turfInfo{display:block}.owner{color:#22c55e;font-weight:bold}.legend{position:absolute;right:25px;bottom:25px;background:rgba(7,11,20,.9);border:1px solid #334155;border-radius:12px;padding:20px;width:270px;z-index:80}.legend h2{margin-bottom:15px}.legendItem{display:flex;gap:12px;margin-bottom:14px}.box{width:27px;height:27px;border-radius:5px;border:2px solid}.red{background:rgba(239,68,68,.4);border-color:#ef4444}.green{background:rgba(34,197,94,.4);border-color:#22c55e}.rightPanel{width:350px;background:#090d18;border-left:1px solid #20283a;padding:18px;overflow-y:auto}.rightTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.addBtn{background:#7c3aed;color:#fff;border:0;border-radius:8px;padding:10px 14px;cursor:pointer}.turfCard{background:#0d1322;border:1px solid #273149;border-radius:10px;padding:13px;margin-bottom:10px}.turfCard b{font-size:15px}.turfCard small{color:#94a3b8}.dot{display:inline-block;width:12px;height:12px;border-radius:50%;background:#22c55e;margin-right:8px}.tip{position:absolute;left:25px;bottom:25px;background:rgba(7,11,20,.85);border:1px solid #334155;border-radius:8px;padding:12px;color:#cbd5e1;z-index:80}@media(max-width:1000px){.sidebar{display:none}.rightPanel{display:none}.legend{width:230px;font-size:12px}}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0b0915;
+    color:white;
+    overflow:hidden;
+}
+
+.app{
+    display:flex;
+    width:100vw;
+    height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:305px;
+    background:#100d1c;
+    padding:20px 14px;
+    height:100vh;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:38px;
+}
+
+.logo img{
+    width:70px;
+    height:70px;
+    object-fit:contain;
+}
+
+.logoText{
+    font-weight:900;
+    font-size:22px;
+    line-height:22px;
+    letter-spacing:2px;
+}
+
+.logoText .purple{
+    color:#c026ff;
+}
+
+.menuTitle{
+    color:#8e879e;
+    font-size:12px;
+    letter-spacing:7px;
+    margin:25px 0 10px 4px;
+}
+
+.menu a{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+    padding:16px 20px;
+    border-radius:6px;
+    margin:8px 0;
+    font-size:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.menu a:hover,
+.menu a.active{
+    background:#2d2448;
+    border-left:4px solid #fff;
+}
+
+/* CONTENT */
+.content{
+    flex:1;
+    position:relative;
+    background:#050713;
+    overflow:hidden;
+}
+
+.topbar{
+    height:56px;
+    background:#080b15;
+    border-bottom:1px solid #20283a;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+    z-index:50;
+    position:relative;
+}
+
+.controls button{
+    background:#111827;
+    color:white;
+    border:1px solid #334155;
+    width:42px;
+    height:36px;
+    border-radius:7px;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.controls button:hover{
+    background:#7c3aed;
+}
+
+/* MAP */
+#mapView{
+    width:100%;
+    height:calc(100vh - 56px);
+    overflow:hidden;
+    position:relative;
+    cursor:grab;
+}
+
+#mapView:active{
+    cursor:grabbing;
+}
+
+#mapContent{
+    width:8192px;
+    height:8192px;
+    position:absolute;
+    left:0;
+    top:0;
+    transform-origin:0 0;
+}
+
+#mapImage{
+    width:8192px;
+    height:8192px;
+    position:absolute;
+    left:0;
+    top:0;
+    user-select:none;
+    pointer-events:none;
+}
+
+/* TURFS */
+.turf{
+    position:absolute;
+    border:5px solid #22c55e;
+    background:rgba(34,197,94,.18);
+    border-radius:14px;
+    z-index:20;
+    box-shadow:0 0 20px #22c55e;
+    cursor:pointer;
+}
+
+.turf:hover{
+    background:rgba(34,197,94,.35);
+}
+
+.turfInfo{
+    display:none;
+    position:absolute;
+    top:-85px;
+    left:0;
+    background:#080812;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:10px;
+    min-width:200px;
+    font-size:17px;
+    z-index:99;
+}
+
+.turf:hover .turfInfo{
+    display:block;
+}
+
+.owner{
+    color:#22c55e;
+    font-weight:bold;
+}
+
+/* LEGEND */
+.legend{
+    position:absolute;
+    right:25px;
+    bottom:25px;
+    z-index:80;
+    background:rgba(8,10,20,.92);
+    border:1px solid #334155;
+    border-radius:12px;
+    padding:20px;
+    width:270px;
+}
+
+.legend h2{
+    margin-bottom:15px;
+}
+
+.legendItem{
+    display:flex;
+    gap:12px;
+    margin-bottom:14px;
+}
+
+.colorBox{
+    width:27px;
+    height:27px;
+    border-radius:5px;
+    border:2px solid;
+}
+
+.red{
+    background:rgba(239,68,68,.4);
+    border-color:#ef4444;
+}
+
+.green{
+    background:rgba(34,197,94,.4);
+    border-color:#22c55e;
+}
+
+.tip{
+    position:absolute;
+    left:25px;
+    bottom:25px;
+    background:rgba(8,10,20,.85);
+    border:1px solid #334155;
+    border-radius:8px;
+    padding:12px 16px;
+    color:#cbd5e1;
+    z-index:80;
+}
+
+/* RIGHT PANEL */
+.turfPanel{
+    position:absolute;
+    top:70px;
+    right:20px;
+    width:330px;
+    max-height:calc(100vh - 170px);
+    overflow:auto;
+    background:rgba(8,10,20,.92);
+    border:1px solid #334155;
+    border-radius:12px;
+    padding:15px;
+    z-index:75;
+}
+
+.turfPanel h3{
+    margin-bottom:12px;
+}
+
+.turfCard{
+    background:#0d1322;
+    border:1px solid #273149;
+    border-radius:9px;
+    padding:12px;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.turfCard small{
+    color:#94a3b8;
+}
+
+.dot{
+    display:inline-block;
+    width:11px;
+    height:11px;
+    border-radius:50%;
+    background:#22c55e;
+    margin-right:8px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
-  <aside class="sidebar">
-    <div>
-      <div class="logoBox"><img src="SundayRomania.png" alt="Sunday Romania"><h1>SUNDAY<br><span>ROMANIA</span></h1></div>
-      <div class="menu">
-        <div class="menuTitle">Navigare</div><a>Dashboard</a><a>Regulament</a><a>Magazin</a><a class="active">Harta</a>
-        <div class="menuTitle">Comunitate</div><a>Factiuni</a><a>War-uri</a><a>Top Mafii</a>
-        <div class="menuTitle">Suport</div><a>Tickete Support</a>
-      </div>
-    </div>
-    <div class="status">STATUS SERVER<br><br><span class="online">● ONLINE</span><br><br>124 / 500<br>Jucători online</div>
-  </aside>
-  <main class="main">
-    <section class="mapSection">
-      <div class="topbar"><b>HARTA INTERACTIVĂ</b><div class="controls"><button onclick="zoomOut()">−</button><button onclick="zoomIn()">+</button><button onclick="resetMap()">⟳</button></div></div>
-      <div id="mapView"><div id="mapContent"><img id="mapImage" src="harta.png" alt="Harta Sunday Romania"></div></div>
-      <div class="legend"><h2>LEGENDA</h2><div class="legendItem"><div class="box red"></div><div><b>ZONA RĂUFAMATĂ</b><br><small>Zone periculoase / controlate</small></div></div><div class="legendItem"><div class="box green"></div><div><b>ZONA PUBLICĂ</b><br><small>Zone sigure / publice</small></div></div></div>
-      <div class="tip">Scroll = zoom | Click + drag = miști harta</div>
-    </section>
-    <aside class="rightPanel"><div class="rightTop"><h3>TURFURI</h3><button class="addBtn">+ ADAUGĂ TURF</button></div><div id="turfList"></div></aside>
-  </main>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="SundayRomania.png" alt="Sunday Romania">
+            <div class="logoText">
+                <div class="purple">SUNDAY</div>
+                <div>ROMANIA</div>
+            </div>
+        </div>
+
+        <div class="menu">
+            <div class="menuTitle">GENERAL</div>
+            <a class="active">Dashboard</a>
+            <a>Regulament</a>
+            <a>Magazin</a>
+            <a>Sugestii</a>
+            <a>Players</a>
+            <a>Staff Members</a>
+            <a>Jucători Banați</a>
+            <a>Hartă</a>
+
+            <div class="menuTitle">FACȚIUNI</div>
+            <a>Facțiuni</a>
+        </div>
+    </aside>
+
+    <main class="content">
+
+        <div class="topbar">
+            <b>HARTA INTERACTIVĂ - SUNDAY ROMANIA</b>
+            <div class="controls">
+                <button onclick="zoomOut()">−</button>
+                <button onclick="zoomIn()">+</button>
+                <button onclick="resetMap()">⟳</button>
+            </div>
+        </div>
+
+        <div id="mapView">
+            <div id="mapContent">
+                <img id="mapImage" src="harta.png" alt="Harta">
+            </div>
+        </div>
+
+        <div class="turfPanel">
+            <h3>TURFURI</h3>
+            <div id="turfList"></div>
+        </div>
+
+        <div class="legend">
+            <h2>LEGENDA</h2>
+
+            <div class="legendItem">
+                <div class="colorBox red"></div>
+                <div>
+                    <b>ZONA RĂUFAMATĂ</b><br>
+                    <small>Zone periculoase / controlate</small>
+                </div>
+            </div>
+
+            <div class="legendItem">
+                <div class="colorBox green"></div>
+                <div>
+                    <b>ZONA PUBLICĂ</b><br>
+                    <small>Zone sigure / publice</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            Scroll = zoom | Click + drag = miști harta
+        </div>
+
+    </main>
+
 </div>
+
 <script>
 /*
-AICI SCHIMBI TURFURILE.
-Toate sunt coborâte cu +100px față de varianta anterioară.
-x/y/w/h sunt coordonate pentru harta 8192x8192.
-Schimbi owner ca să schimbi mafia: Sindicat, Nortenos, Sons of Anarchy, Hitman, Public, Liber.
+==================================================
+TURFURI EDITABILE
+Toate sunt puse puțin mai jos.
+Schimbi owner ca să modifici mafia.
+Exemplu:
+owner: "Nortenos"
+owner: "Sindicat"
+owner: "Sons of Anarchy"
+owner: "Hitman"
+==================================================
 */
+
 const turfuri = [
-  {id:1,name:"Turf Aeroport Nord",owner:"Sindicat",x:3920,y:2570,w:620,h:250},
-  {id:2,name:"Turf Aeroport Sud",owner:"Sindicat",x:4540,y:2570,w:620,h:250},
-  {id:3,name:"Turf Vinewood",owner:"Sindicat",x:3180,y:4150,w:520,h:520},
-  {id:4,name:"Turf Downtown",owner:"Sindicat",x:3200,y:5550,w:660,h:430},
-  {id:5,name:"Turf Vespucci",owner:"Sindicat",x:2300,y:5760,w:350,h:260},
-  {id:6,name:"Turf La Puerta",owner:"Sindicat",x:2420,y:6350,w:330,h:440},
-  {id:7,name:"Turf East LS",owner:"Sindicat",x:4450,y:6020,w:360,h:430},
-  {id:8,name:"Turf South LS",owner:"Sindicat",x:4480,y:6950,w:360,h:470}
+    {
+        id: 1,
+        name: "Turf Aeroport Nord",
+        owner: "Sindicat",
+        x: 3920,
+        y: 2570,
+        w: 620,
+        h: 250
+    },
+    {
+        id: 2,
+        name: "Turf Aeroport Sud",
+        owner: "Sindicat",
+        x: 4540,
+        y: 2570,
+        w: 620,
+        h: 250
+    },
+    {
+        id: 3,
+        name: "Turf Vinewood",
+        owner: "Sindicat",
+        x: 3180,
+        y: 4150,
+        w: 520,
+        h: 520
+    },
+    {
+        id: 4,
+        name: "Turf Downtown",
+        owner: "Sindicat",
+        x: 3200,
+        y: 5550,
+        w: 660,
+        h: 430
+    },
+    {
+        id: 5,
+        name: "Turf Vespucci",
+        owner: "Sindicat",
+        x: 2300,
+        y: 5760,
+        w: 350,
+        h: 260
+    },
+    {
+        id: 6,
+        name: "Turf La Puerta",
+        owner: "Sindicat",
+        x: 2420,
+        y: 6350,
+        w: 330,
+        h: 440
+    },
+    {
+        id: 7,
+        name: "Turf East LS",
+        owner: "Sindicat",
+        x: 4450,
+        y: 6020,
+        w: 360,
+        h: 430
+    },
+    {
+        id: 8,
+        name: "Turf South LS",
+        owner: "Sindicat",
+        x: 4480,
+        y: 6950,
+        w: 360,
+        h: 470
+    }
 ];
-const mafiaColors={"Sindicat":"#22c55e","Nortenos":"#ef4444","Sons of Anarchy":"#f97316","Hitman":"#a855f7","Public":"#3b82f6","Liber":"#9ca3af"};
-const mapContent=document.getElementById("mapContent");
-const turfList=document.getElementById("turfList");
+
+const mafiaColors = {
+    "Sindicat": "#22c55e",
+    "Nortenos": "#ef4444",
+    "Sons of Anarchy": "#f97316",
+    "Hitman": "#a855f7",
+    "Public": "#3b82f6",
+    "Liber": "#9ca3af"
+};
+
+const mapContent = document.getElementById("mapContent");
+const turfList = document.getElementById("turfList");
+
 function loadTurfs(){
-  turfuri.forEach(turf=>{
-    const color=mafiaColors[turf.owner]||"#22c55e";
-    const div=document.createElement("div");
-    div.className="turf";
-    div.style.left=turf.x+"px";div.style.top=turf.y+"px";div.style.width=turf.w+"px";div.style.height=turf.h+"px";
-    div.style.borderColor=color;div.style.background=color+"35";div.style.boxShadow=`0 0 25px ${color}`;
-    div.innerHTML=`<div class="turfInfo"><b>${turf.name}</b><br>Deținut de: <span class="owner" style="color:${color}">${turf.owner}</span><br>ID: ${turf.id}</div>`;
-    div.onclick=()=>alert(`${turf.name}\nDeținut de: ${turf.owner}\nID: ${turf.id}`);
-    mapContent.appendChild(div);
-    turfList.innerHTML+=`<div class="turfCard"><b><span class="dot" style="background:${color}"></span>${turf.name}</b><br><small>Deținut de: <span style="color:${color};font-weight:bold">${turf.owner}</span></small><br><small>X: ${turf.x} | Y: ${turf.y}</small></div>`;
-  });
+    turfuri.forEach(turf => {
+        const color = mafiaColors[turf.owner] || "#22c55e";
+
+        const div = document.createElement("div");
+        div.className = "turf";
+        div.style.left = turf.x + "px";
+        div.style.top = turf.y + "px";
+        div.style.width = turf.w + "px";
+        div.style.height = turf.h + "px";
+        div.style.borderColor = color;
+        div.style.background = color + "35";
+        div.style.boxShadow = `0 0 25px ${color}`;
+
+        div.innerHTML = `
+            <div class="turfInfo">
+                <b>${turf.name}</b><br>
+                Deținut de: <span class="owner" style="color:${color}">${turf.owner}</span><br>
+                ID Turf: ${turf.id}
+            </div>
+        `;
+
+        div.onclick = () => {
+            alert(`${turf.name}\nDeținut de: ${turf.owner}\nID Turf: ${turf.id}`);
+        };
+
+        mapContent.appendChild(div);
+
+        turfList.innerHTML += `
+            <div class="turfCard">
+                <b><span class="dot" style="background:${color}"></span>${turf.name}</b><br>
+                <small>Deținut de: <span style="color:${color};font-weight:bold">${turf.owner}</span></small><br>
+                <small>X: ${turf.x} | Y: ${turf.y}</small>
+            </div>
+        `;
+    });
 }
+
 loadTurfs();
-const mapView=document.getElementById("mapView");
-let scale=0.155,posX=170,posY=-180,dragging=false,startX=0,startY=0;
-function updateMap(){mapContent.style.transform=`translate(${posX}px, ${posY}px) scale(${scale})`;}
+
+/* ZOOM + DRAG */
+const mapView = document.getElementById("mapView");
+
+let scale = 0.155;
+let posX = 170;
+let posY = -180;
+
+let dragging = false;
+let startX = 0;
+let startY = 0;
+
+function updateMap(){
+    mapContent.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
 updateMap();
-mapView.addEventListener("wheel",e=>{e.preventDefault();const oldScale=scale;scale+=e.deltaY<0?0.08:-0.08;scale=Math.max(0.08,Math.min(scale,2.5));const rect=mapView.getBoundingClientRect();const mouseX=e.clientX-rect.left,mouseY=e.clientY-rect.top;posX=mouseX-(mouseX-posX)*(scale/oldScale);posY=mouseY-(mouseY-posY)*(scale/oldScale);updateMap();},{passive:false});
-mapView.addEventListener("mousedown",e=>{dragging=true;startX=e.clientX-posX;startY=e.clientY-posY;});
-window.addEventListener("mouseup",()=>dragging=false);
-window.addEventListener("mousemove",e=>{if(!dragging)return;posX=e.clientX-startX;posY=e.clientY-startY;updateMap();});
-function zoomIn(){scale=Math.min(scale+0.15,2.5);updateMap();}
-function zoomOut(){scale=Math.max(scale-0.15,0.08);updateMap();}
-function resetMap(){scale=0.155;posX=170;posY=-180;updateMap();}
+
+mapView.addEventListener("wheel", function(e){
+    e.preventDefault();
+
+    const oldScale = scale;
+
+    if(e.deltaY < 0){
+        scale += 0.08;
+    }else{
+        scale -= 0.08;
+    }
+
+    scale = Math.max(0.08, Math.min(scale, 2.5));
+
+    const rect = mapView.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    posX = mouseX - (mouseX - posX) * (scale / oldScale);
+    posY = mouseY - (mouseY - posY) * (scale / oldScale);
+
+    updateMap();
+});
+
+mapView.addEventListener("mousedown", function(e){
+    dragging = true;
+    startX = e.clientX - posX;
+    startY = e.clientY - posY;
+});
+
+window.addEventListener("mouseup", function(){
+    dragging = false;
+});
+
+window.addEventListener("mousemove", function(e){
+    if(!dragging) return;
+
+    posX = e.clientX - startX;
+    posY = e.clientY - startY;
+
+    updateMap();
+});
+
+function zoomIn(){
+    scale = Math.min(scale + 0.15, 2.5);
+    updateMap();
+}
+
+function zoomOut(){
+    scale = Math.max(scale - 0.15, 0.08);
+    updateMap();
+}
+
+function resetMap(){
+    scale = 0.155;
+    posX = 170;
+    posY = -180;
+    updateMap();
+}
 </script>
+
 </body>
 </html>
