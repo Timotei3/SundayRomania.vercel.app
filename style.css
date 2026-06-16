@@ -660,23 +660,22 @@ textarea{
 
 
 /* =========================================================
-   HARTA LIVE - SUNDAY ROMANIA
-   Pune acest bloc la final. Nu strică restul site-ului.
-   Compatibil cu harta.html care folosește:
-   .map-layout, .map-main, .map-viewport, .map-layer,
-   .map-tools, .map-title-fixed, .map-legend
+   HARTA LIVE - SUNDAY ROMANIA - FIX COMPLET
+   Lipește acest fișier complet ca style.css.
+   Repară sidebar logo, harta full screen, legendă fără scroll.
    ========================================================= */
 
 body.map-page{
-  display:flex;
+  display:block;
   overflow:hidden;
   background:#05020a;
   color:white;
-  min-height:100vh;
+  width:100vw;
+  height:100vh;
 }
 
-/* Layout pagina harta */
-.map-layout{
+body.map-page .map-layout,
+body.map-page .map-app{
   display:flex;
   width:100vw;
   height:100vh;
@@ -684,31 +683,67 @@ body.map-page{
   background:#05020a;
 }
 
-/* Sidebar-ul original rămâne vizibil */
-body.map-page aside{
+/* Sidebar doar pe pagina hărții */
+body.map-page aside,
+body.map-page .sidebar,
+body.map-page .map-sidebar{
   width:315px;
   min-width:315px;
+  max-width:315px;
   height:100vh;
   min-height:100vh;
   overflow-y:auto;
+  overflow-x:hidden;
   position:relative;
   z-index:50;
   background:#11111d;
   border-right:1px solid #25253d;
+  padding:18px 18px;
 }
 
-/* Logo mai vizibil doar pe pagina de hartă */
-body.map-page .brand-logo{
-  width:44px;
-  max-height:44px;
+/* Logo sidebar: mic, puțin mai mare decât textul SUNDAY ROMANIA */
+body.map-page .brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:28px;
+}
+
+body.map-page .brand-logo,
+body.map-page .sidebar-logo{
+  width:38px !important;
+  max-width:38px !important;
+  height:38px !important;
   object-fit:contain;
-  filter:drop-shadow(0 0 10px rgba(177,76,255,.65));
-  animation:sundayFloat 3s ease-in-out infinite;
+  display:block;
+  flex-shrink:0;
+  filter:drop-shadow(0 0 8px #b500ff);
 }
 
-body.map-page main.map-main{
+body.map-page .brand-text span,
+body.map-page .sidebar h3,
+body.map-page .map-sidebar h3{
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  letter-spacing:.5px;
+  margin:0;
+  text-align:left;
+  line-height:1.1;
+}
+
+body.map-page .brand-text strong{
+  color:#b14cff;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+body.map-page main.map-main,
+body.map-page .map-main,
+body.map-page .map-content{
   flex:1;
-  padding:0;
+  padding:0 !important;
   height:100vh;
   min-height:100vh;
   position:relative;
@@ -716,7 +751,8 @@ body.map-page main.map-main{
   background:#05020a;
 }
 
-/* Zona pe care se mișcă harta */
+/* Acceptă ambele variante: id-uri și clase */
+#mapViewport,
 .map-viewport{
   position:absolute;
   inset:0;
@@ -725,10 +761,12 @@ body.map-page main.map-main{
   background:radial-gradient(circle at center,#16072a 0%,#05020a 60%,#020105 100%);
 }
 
+#mapViewport:active,
 .map-viewport:active{
   cursor:grabbing;
 }
 
+#mapLayer,
 .map-layer{
   position:absolute;
   left:0;
@@ -739,23 +777,29 @@ body.map-page main.map-main{
   will-change:transform;
 }
 
-.map-layer img{
+#mapImage,
+.map-layer img,
+#mapLayer img{
   position:absolute;
   left:0;
   top:0;
   width:8192px;
   height:8192px;
+  max-width:none !important;
+  max-height:none !important;
   user-select:none;
   pointer-events:none;
   image-rendering:auto;
   filter:saturate(1.08) contrast(1.04);
 }
 
-/* Butoanele - / + / reset: 1 cm după sidebar */
+/* Butoanele - / + / reset: 1cm după sidebar */
+.mapTools,
 .map-tools{
-  position:fixed;
+  position:fixed !important;
   top:12px;
-  left:353px; /* 315px sidebar + ~1cm */
+  left:353px !important; /* 315px sidebar + aproximativ 1cm */
+  right:auto !important;
   z-index:99999;
   display:flex;
   gap:8px;
@@ -766,6 +810,7 @@ body.map-page main.map-main{
   box-shadow:0 0 18px rgba(170,0,255,.35);
 }
 
+.mapTools button,
 .map-tools button{
   width:42px;
   height:36px;
@@ -779,15 +824,18 @@ body.map-page main.map-main{
   padding:0;
 }
 
+.mapTools button:hover,
 .map-tools button:hover{
   background:#7c2cff;
 }
 
-/* Titlu fix sus, lângă controale */
+/* Titlu fix sus */
+.mapTitle,
 .map-title-fixed{
-  position:fixed;
+  position:fixed !important;
   top:12px;
-  left:535px;
+  left:535px !important;
+  right:auto !important;
   z-index:99998;
   display:flex;
   align-items:center;
@@ -801,6 +849,7 @@ body.map-page main.map-main{
   pointer-events:none;
 }
 
+.mapTitle img,
 .map-title-fixed img{
   width:28px;
   height:28px;
@@ -809,6 +858,7 @@ body.map-page main.map-main{
   animation:sundayFloat 3s ease-in-out infinite;
 }
 
+.mapTitle span,
 .map-title-fixed span{
   font-size:14px;
   font-weight:900;
@@ -816,15 +866,17 @@ body.map-page main.map-main{
   white-space:nowrap;
 }
 
-/* Legenda completă, fără scroll, sub controale */
+/* Legenda: sub butoane, completă, fără scroll */
+.legendPanel,
 .map-legend{
-  position:fixed;
+  position:fixed !important;
   top:66px;
-  left:353px; /* 315px sidebar + ~1cm */
+  left:353px !important; /* 315px sidebar + aproximativ 1cm */
+  right:auto !important;
   width:165px;
-  height:auto;
-  max-height:none;
-  overflow:visible;
+  height:auto !important;
+  max-height:none !important;
+  overflow:visible !important;
   padding:8px;
   border-radius:12px;
   background:rgba(20,5,35,.94);
@@ -835,6 +887,7 @@ body.map-page main.map-main{
   animation:legendMove 4s ease-in-out infinite;
 }
 
+.legendLogo,
 .map-legend-logo{
   width:40px;
   display:block;
@@ -843,6 +896,7 @@ body.map-page main.map-main{
   animation:sundayFloat 3s ease-in-out infinite;
 }
 
+.legendPanel h2,
 .map-legend h2{
   font-size:16px;
   line-height:1;
@@ -852,6 +906,7 @@ body.map-page main.map-main{
   text-shadow:0 0 8px #b500ff;
 }
 
+.legendRow,
 .map-legend-row{
   display:flex;
   align-items:center;
@@ -859,6 +914,8 @@ body.map-page main.map-main{
   margin:5px 0;
 }
 
+.legendRow p,
+.legendPanel p,
 .map-legend-row p,
 .map-legend .map-rule{
   font-size:10px;
@@ -867,7 +924,9 @@ body.map-page main.map-main{
   color:#fff;
 }
 
-.map-legend-icon{
+.legendIcon,
+.map-legend-icon,
+.legendLine{
   width:28px;
   height:4px;
   border-radius:8px;
@@ -875,48 +934,35 @@ body.map-page main.map-main{
   box-shadow:0 0 8px currentColor;
 }
 
-.map-yellow-line{
-  color:#fbff20;
-  background:#fbff20;
-}
+.yellowLine,
+.map-yellow-line{color:#fbff20;background:#fbff20;}
+.greenLine,
+.map-green-line{color:#41ff31;background:#41ff31;}
+.redLine,
+.map-red-line{color:#ff2a16;background:#ff2a16;}
 
-.map-green-line{
-  color:#41ff31;
-  background:#41ff31;
-}
-
-.map-red-line{
-  color:#ff2a16;
-  background:#ff2a16;
-}
-
-.map-red-circle{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  color:#d91f08;
-  background:#d91f08;
-}
-
+.legendCircle,
+.redCircle,
+.greenCircle,
+.map-red-circle,
 .map-green-circle{
   width:18px;
   height:18px;
   border-radius:50%;
-  color:#56ff30;
-  background:#56ff30;
+  flex-shrink:0;
 }
 
-.map-legend b.map-green{
-  color:#46ff53;
-}
+.redCircle,
+.map-red-circle{color:#d91f08;background:#d91f08;}
+.greenCircle,
+.map-green-circle{color:#56ff30;background:#56ff30;}
 
-.map-legend b.map-red{
-  color:#ff3131;
-}
-
-.map-legend b.map-yellow{
-  color:#fbff20;
-}
+.legendPanel b.green,
+.map-legend b.map-green{color:#46ff53;}
+.legendPanel b.red,
+.map-legend b.map-red{color:#ff3131;}
+.legendPanel b.yellow,
+.map-legend b.map-yellow{color:#fbff20;}
 
 .map-hint{
   position:fixed;
@@ -932,8 +978,8 @@ body.map-page main.map-main{
   backdrop-filter:blur(8px);
 }
 
-/* Turfuri din turfs.json */
-.map-turf{
+.map-turf,
+.turf{
   position:absolute;
   border-radius:999px;
   transform:translate(-50%,-50%);
@@ -945,12 +991,15 @@ body.map-page main.map-main{
   transition:.18s;
 }
 
-.map-turf:hover{
+.map-turf:hover,
+.turf:hover{
   filter:brightness(1.25);
   box-shadow:0 0 38px var(--turf-color,#b14cff), inset 0 0 26px rgba(255,255,255,.18);
 }
 
-.map-turf-label{
+.map-turf-label,
+.turfText,
+.turf-label{
   position:absolute;
   left:50%;
   top:50%;
@@ -965,9 +1014,12 @@ body.map-page main.map-main{
   font-weight:900;
   text-shadow:0 0 10px #000;
   pointer-events:none;
+  color:#fff;
 }
 
-.map-turf-label small{
+.map-turf-label small,
+.turfText small,
+.turf-label small{
   display:block;
   font-size:11px;
   font-weight:700;
@@ -991,57 +1043,26 @@ body.map-page main.map-main{
   z-index:10;
 }
 
-.map-turf:hover .map-turf-popup{
-  display:block;
-}
-
-.map-turf-popup b{
-  font-size:16px;
-}
-
-.map-turf-popup span{
-  font-weight:900;
-  color:var(--turf-color,#b14cff);
-}
+.map-turf:hover .map-turf-popup{display:block;}
+.map-turf-popup b{font-size:16px;}
+.map-turf-popup span{font-weight:900;color:var(--turf-color,#b14cff);}
 
 @keyframes sundayFloat{
-  0%,100%{
-    transform:translateY(0) scale(1);
-  }
-
-  50%{
-    transform:translateY(-4px) scale(1.03);
-  }
+  0%,100%{transform:translateY(0) scale(1);}
+  50%{transform:translateY(-4px) scale(1.03);}
 }
 
 @keyframes legendMove{
-  0%,100%{
-    transform:translateY(0);
-  }
-
-  50%{
-    transform:translateY(-3px);
-  }
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-3px);}
 }
 
 @media(max-width:900px){
-  body.map-page aside{
-    display:none;
-  }
-
-  .map-tools{
-    left:12px;
-  }
-
-  .map-legend{
-    left:12px;
-  }
-
-  .map-title-fixed{
-    left:194px;
-  }
-
-  .map-hint{
-    left:12px;
-  }
+  body.map-page aside,
+  body.map-page .sidebar,
+  body.map-page .map-sidebar{display:none;}
+  .mapTools,.map-tools{left:12px !important;}
+  .legendPanel,.map-legend{left:12px !important;}
+  .mapTitle,.map-title-fixed{left:194px !important;}
+  .map-hint{left:12px;}
 }
