@@ -831,22 +831,28 @@ body.map-page .map-content{
 
 /* Titlu fix sus */
 .mapTitle,
-.map-title-fixed{
-  position:fixed !important;
-  top:12px;
-  left:535px !important;
-  right:auto !important;
-  z-index:99998;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:rgba(18,0,28,.72);
-  border:1px solid rgba(180,80,255,.3);
-  border-radius:14px;
-  padding:7px 10px;
-  color:white;
-  box-shadow:0 0 14px rgba(180,80,255,.25);
-  pointer-events:none;
+.map-title-fixed {
+    position: fixed !important;
+
+    top: 12px;
+    right: 20px !important;   /* <-- în colțul dreapta */
+    left: auto !important;    /* <-- elimină poziția din stânga */
+
+    z-index: 99999;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background: rgba(18,0,28,.72);
+    border: 1px solid rgba(180,80,255,.3);
+    border-radius: 14px;
+    padding: 7px 10px;
+
+    color: white;
+    box-shadow: 0 0 14px rgba(180,80,255,.25);
+
+    pointer-events: none;
 }
 
 .mapTitle img,
