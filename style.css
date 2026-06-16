@@ -1063,15 +1063,7 @@ body.map-page .map-content{
   body.map-page .map-sidebar{display:none;}
   .mapTools,.map-tools{left:12px !important;}
   .legendPanel,.map-legend{left:12px !important;}
-  .mapTitle {
-    position: fixed;
-    top: 12px;
-    right: 20px;
-    left: auto;    
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    z-index: 99999;
+ .mapTitle,
+  .map-title-fixed{left:194px !important;}
+  .map-hint{left:12px;}
 }
