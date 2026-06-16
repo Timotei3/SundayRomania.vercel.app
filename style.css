@@ -795,19 +795,26 @@ body.map-page .map-content{
 
 /* Butoanele - / + / reset: 1cm după sidebar */
 .mapTools,
-.map-tools{
-  position:fixed !important;
-  top:12px;
-  left:353px !important; /* 315px sidebar + aproximativ 1cm */
-  right:auto !important;
-  z-index:99999;
-  display:flex;
-  gap:8px;
-  background:rgba(18,0,28,.92);
-  border:1px solid rgba(180,0,255,.55);
-  border-radius:14px;
-  padding:8px;
-  box-shadow:0 0 18px rgba(170,0,255,.35);
+.map-tools {
+    position: fixed !important;
+
+    left: 20px;
+    bottom: 20px;
+
+    top: auto !important;
+    right: auto !important;
+
+    display: flex;
+    gap: 8px;
+
+    z-index: 99999;
+
+    background: rgba(20,10,35,.92);
+    padding: 8px;
+    border-radius: 12px;
+
+    border: 1px solid rgba(170,80,255,.35);
+    box-shadow: 0 0 12px rgba(170,80,255,.25);
 }
 
 .mapTools button,
