@@ -661,15 +661,21 @@ textarea{
 
 /* =========================================================
    HARTA LIVE - SUNDAY ROMANIA
-   Pus la final ca să NU strice restul site-ului.
+   Pune acest bloc la final. Nu strică restul site-ului.
+   Compatibil cu harta.html care folosește:
+   .map-layout, .map-main, .map-viewport, .map-layer,
+   .map-tools, .map-title-fixed, .map-legend
    ========================================================= */
+
 body.map-page{
-  display:block;
+  display:flex;
   overflow:hidden;
   background:#05020a;
   color:white;
+  min-height:100vh;
 }
 
+/* Layout pagina harta */
 .map-layout{
   display:flex;
   width:100vw;
@@ -678,6 +684,7 @@ body.map-page{
   background:#05020a;
 }
 
+/* Sidebar-ul original rămâne vizibil */
 body.map-page aside{
   width:315px;
   min-width:315px;
@@ -686,6 +693,17 @@ body.map-page aside{
   overflow-y:auto;
   position:relative;
   z-index:50;
+  background:#11111d;
+  border-right:1px solid #25253d;
+}
+
+/* Logo mai vizibil doar pe pagina de hartă */
+body.map-page .brand-logo{
+  width:44px;
+  max-height:44px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 10px rgba(177,76,255,.65));
+  animation:sundayFloat 3s ease-in-out infinite;
 }
 
 body.map-page main.map-main{
@@ -698,6 +716,7 @@ body.map-page main.map-main{
   background:#05020a;
 }
 
+/* Zona pe care se mișcă harta */
 .map-viewport{
   position:absolute;
   inset:0;
@@ -732,12 +751,12 @@ body.map-page main.map-main{
   filter:saturate(1.08) contrast(1.04);
 }
 
-/* Butoanele - / + / reset: 1cm după sidebar */
+/* Butoanele - / + / reset: 1 cm după sidebar */
 .map-tools{
   position:fixed;
   top:12px;
   left:353px; /* 315px sidebar + ~1cm */
-  z-index:9999;
+  z-index:99999;
   display:flex;
   gap:8px;
   background:rgba(18,0,28,.92);
@@ -764,12 +783,12 @@ body.map-page main.map-main{
   background:#7c2cff;
 }
 
-/* Titlu fix sus, nu se mișcă la zoom */
+/* Titlu fix sus, lângă controale */
 .map-title-fixed{
   position:fixed;
   top:12px;
   left:535px;
-  z-index:9998;
+  z-index:99998;
   display:flex;
   align-items:center;
   gap:8px;
@@ -797,7 +816,7 @@ body.map-page main.map-main{
   white-space:nowrap;
 }
 
-/* Legenda mică, completă, fără scroll, la 1cm de sidebar */
+/* Legenda completă, fără scroll, sub controale */
 .map-legend{
   position:fixed;
   top:66px;
@@ -812,7 +831,7 @@ body.map-page main.map-main{
   border:1px solid rgba(180,80,255,.4);
   box-shadow:0 0 10px rgba(180,80,255,.25);
   color:white;
-  z-index:9999;
+  z-index:99999;
   animation:legendMove 4s ease-in-out infinite;
 }
 
@@ -856,15 +875,48 @@ body.map-page main.map-main{
   box-shadow:0 0 8px currentColor;
 }
 
-.map-yellow-line{color:#fbff20;background:#fbff20;}
-.map-green-line{color:#41ff31;background:#41ff31;}
-.map-red-line{color:#ff2a16;background:#ff2a16;}
-.map-red-circle{width:18px;height:18px;border-radius:50%;color:#d91f08;background:#d91f08;}
-.map-green-circle{width:18px;height:18px;border-radius:50%;color:#56ff30;background:#56ff30;}
+.map-yellow-line{
+  color:#fbff20;
+  background:#fbff20;
+}
 
-.map-legend b.map-green{color:#46ff53;}
-.map-legend b.map-red{color:#ff3131;}
-.map-legend b.map-yellow{color:#fbff20;}
+.map-green-line{
+  color:#41ff31;
+  background:#41ff31;
+}
+
+.map-red-line{
+  color:#ff2a16;
+  background:#ff2a16;
+}
+
+.map-red-circle{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  color:#d91f08;
+  background:#d91f08;
+}
+
+.map-green-circle{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  color:#56ff30;
+  background:#56ff30;
+}
+
+.map-legend b.map-green{
+  color:#46ff53;
+}
+
+.map-legend b.map-red{
+  color:#ff3131;
+}
+
+.map-legend b.map-yellow{
+  color:#fbff20;
+}
 
 .map-hint{
   position:fixed;
@@ -880,6 +932,7 @@ body.map-page main.map-main{
   backdrop-filter:blur(8px);
 }
 
+/* Turfuri din turfs.json */
 .map-turf{
   position:absolute;
   border-radius:999px;
@@ -942,23 +995,53 @@ body.map-page main.map-main{
   display:block;
 }
 
-.map-turf-popup b{font-size:16px;}
-.map-turf-popup span{font-weight:900;color:var(--turf-color,#b14cff);}
+.map-turf-popup b{
+  font-size:16px;
+}
+
+.map-turf-popup span{
+  font-weight:900;
+  color:var(--turf-color,#b14cff);
+}
 
 @keyframes sundayFloat{
-  0%,100%{transform:translateY(0) scale(1);}
-  50%{transform:translateY(-4px) scale(1.03);}
+  0%,100%{
+    transform:translateY(0) scale(1);
+  }
+
+  50%{
+    transform:translateY(-4px) scale(1.03);
+  }
 }
 
 @keyframes legendMove{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-3px);}
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-3px);
+  }
 }
 
 @media(max-width:900px){
-  body.map-page aside{display:none;}
-  .map-tools{left:12px;}
-  .map-legend{left:12px;}
-  .map-title-fixed{left:194px;}
-  .map-hint{left:12px;}
+  body.map-page aside{
+    display:none;
+  }
+
+  .map-tools{
+    left:12px;
+  }
+
+  .map-legend{
+    left:12px;
+  }
+
+  .map-title-fixed{
+    left:194px;
+  }
+
+  .map-hint{
+    left:12px;
+  }
 }
