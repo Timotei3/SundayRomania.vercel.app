@@ -1135,3 +1135,12 @@ body.map-page .map-content{
             drop-shadow(0 0 26px #b500ff);
     }
 }
+
+.rules-left img {
+    filter:
+        drop-shadow(0 0 4px #d84cff)
+        drop-shadow(0 0 10px #b500ff)
+        drop-shadow(0 0 18px #8a2be2) !important;
+
+    animation: logoPulse 2s ease-in-out infinite;
+}
