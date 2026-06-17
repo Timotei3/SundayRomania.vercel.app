@@ -71,54 +71,64 @@ const mapViewport = document.getElementById("mapViewport");
 const mapLayer = document.getElementById("mapLayer");
 const mapImage = document.getElementById("mapImage");
 
-let scale = 0.18;
-let posX = 250;
-let posY = 100;
-let dragging = false;
-let startX = 0;
-let startY = 0;
+let scale = 1;
+let startScale = 1;
+
+function fitMapToScreen() {
+  const viewportW = mapViewport.clientWidth;
+  const viewportH = mapViewport.clientHeight;
+
+  const imageW = mapImage.naturalWidth || 8192;
+  const imageH = mapImage.naturalHeight || 8192;
+
+  const scaleX = viewportW / imageW;
+  const scaleY = viewportH / imageH;
+
+  startScale = Math.max(scaleX, scaleY);
+  scale = startScale;
+
+  updateMap();
+}
 
 function updateMap() {
-  mapLayer.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  mapLayer.style.width = "100%";
+  mapLayer.style.height = "100%";
+  mapLayer.style.transformOrigin = "center center";
+  mapLayer.style.transform = `scale(${scale})`;
 }
 
 function zoomIn() {
-  scale += 0.08;
+  scale = Math.min(scale + 0.15, startScale * 5);
   updateMap();
 }
 
 function zoomOut() {
-  scale = Math.max(0.05, scale - 0.08);
+  scale = Math.max(scale - 0.15, startScale);
   updateMap();
 }
 
 function resetMap() {
-  scale = 0.18;
-  posX = 250;
-  posY = 100;
+  scale = startScale;
   updateMap();
 }
 
-mapViewport.addEventListener("mousedown", e => {
-  dragging = true;
-  startX = e.clientX - posX;
-  startY = e.clientY - posY;
-});
-
-window.addEventListener("mouseup", () => dragging = false);
-
-window.addEventListener("mousemove", e => {
-  if (!dragging) return;
-  posX = e.clientX - startX;
-  posY = e.clientY - startY;
-  updateMap();
-});
-
-mapViewport.addEventListener("wheel", e => {
+mapViewport.addEventListener("wheel", function(e) {
   e.preventDefault();
-  scale += e.deltaY < 0 ? 0.06 : -0.06;
-  scale = Math.max(0.05, Math.min(scale, 3));
-  updateMap();
+
+  if (e.deltaY < 0) {
+    zoomIn();
+  } else {
+    zoomOut();
+  }
+}, { passive: false });
+
+mapImage.addEventListener("load", fitMapToScreen);
+window.addEventListener("resize", fitMapToScreen);
+
+if (mapImage.complete) {
+  fitMapToScreen();
+}
+</script>
 });
 
 function turfColor(type) {
