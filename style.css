@@ -48,17 +48,19 @@ aside{
 }
 
 .brand-text span{
-  color:#b14cff;
-  font-size:18px;
-  font-weight:800;
+  color:#c64dff;
+  font-size:20px;
+  font-weight:900;
   letter-spacing:1px;
+  line-height:1;
 }
 
 .brand-text strong{
-  color:white;
-  font-size:22px;
-  font-weight:800;
+  color:#ffffff;
+  font-size:20px;
+  font-weight:900;
   letter-spacing:1px;
+  line-height:1;
 }
 
 aside p{
