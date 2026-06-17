@@ -96,7 +96,29 @@ function fitMap() {
   posX = (vw - iw * scale) / 2;
   posY = (vh - ih * scale) / 2;
 
-  updateMap();
+ function updateMap() {
+  function clampMap() {
+  const vw = mapViewport.clientWidth;
+  const vh = mapViewport.clientHeight;
+
+  const iw = mapImage.naturalWidth || 8192;
+  const ih = mapImage.naturalHeight || 8192;
+
+  const scaledW = iw * scale;
+  const scaledH = ih * scale;
+
+  if (scaledW <= vw) {
+    posX = (vw - scaledW) / 2;
+  } else {
+    posX = Math.min(0, Math.max(vw - scaledW, posX));
+  }
+
+  if (scaledH <= vh) {
+    posY = (vh - scaledH) / 2;
+  } else {
+    posY = Math.min(0, Math.max(vh - scaledH, posY));
+  }
+}
 }
 
 function updateMap() {
