@@ -722,9 +722,9 @@ body.map-page .brand{
 
 body.map-page .brand-logo,
 body.map-page .sidebar-logo{
-  width:38px !important;
-  max-width:38px !important;
-  height:38px !important;
+  width:42px !important;
+  max-width:42px !important;
+  height:42px !important;
   object-fit:contain;
   display:block;
   flex-shrink:0;
