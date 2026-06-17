@@ -884,7 +884,7 @@ body.map-page .map-content{
 .map-legend{
   position:fixed !important;
   top:66px;
-  left:353px !important; /* 315px sidebar + aproximativ 1cm */
+  left:345px !important; /* 315px sidebar + aproximativ 1cm */
   right:auto !important;
   width:165px;
   height:auto !important;
