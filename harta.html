@@ -6,18 +6,19 @@
   <title>Sunday Romania Map</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="map-page">
 
 <div class="map-layout">
   <aside class="sidebar">
-  <div class="brand">
-  <img class="brand-logo" src="SundayRomania.png" alt="Sunday Romania">
+    <div class="brand">
+      <img class="brand-logo" src="SundayRomania.png" alt="Sunday Romania">
 
-  <div class="brand-text">
-    <span>SUNDAY</span>
-    <strong>ROMANIA</strong>
-  </div>
-</div>
+      <div class="brand-text">
+        <span>SUNDAY</span>
+        <strong>ROMANIA</strong>
+      </div>
+    </div>
 
     <p>GENERAL</p>
     <a href="index.html">Dashboard</a>
@@ -33,23 +34,23 @@
   <main class="map-main">
     <div id="mapViewport">
       <div id="mapLayer">
-        <img id="mapImage" src="harta.png" draggable="false">
+        <img id="mapImage" src="harta.png" draggable="false" alt="Harta Sunday Romania">
       </div>
     </div>
 
     <div class="mapTools">
-      <button onclick="zoomOut()">−</button>
-      <button onclick="zoomIn()">+</button>
-      <button onclick="resetMap()">⟳</button>
+      <button type="button" onclick="zoomOut()">−</button>
+      <button type="button" onclick="zoomIn()">+</button>
+      <button type="button" onclick="resetMap()">⟳</button>
     </div>
 
     <div class="mapTitle">
-      <img src="SundayRomania.png">
+      <img src="SundayRomania.png" alt="Sunday Romania">
       <span>Harta Sunday Romania</span>
     </div>
 
     <section class="legendPanel">
-      <img src="SundayRomania.png" class="legendLogo">
+      <img src="SundayRomania.png" class="legendLogo" alt="Sunday Romania">
       <h2>LEGENDĂ</h2>
 
       <div class="legendRow"><span class="legendLine yellowLine"></span><p>Zonă unde este permis jafuitul.</p></div>
@@ -67,7 +68,6 @@
 </div>
 
 <script>
-<script>
 const mapViewport = document.getElementById("mapViewport");
 const mapLayer = document.getElementById("mapLayer");
 const mapImage = document.getElementById("mapImage");
@@ -77,97 +77,110 @@ let baseScale = 1;
 let posX = 0;
 let posY = 0;
 
+let dragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+
+/*
+  AICI SCHIMBI TURFURILE:
+  - x/y = poziția pe hartă
+  - radius = cât de mare este cercul
+  - color = culoarea cercului
+*/
 const turfs = [
-  { name: "Zona 1", owner: "Liber", type: "red", x: 4200, y: 5200, radius: 350 },
-  { name: "Zona 2", owner: "Liber", type: "red", x: 5700, y: 6100, radius: 280 },
-  { name: "Zona 3", owner: "Liber", type: "red", x: 3000, y: 4300, radius: 300 }
+  { name: "Zona 1", owner: "Sindicat", x: 4200, y: 5200, radius: 350, color: "#ff2a16" },
+  { name: "Zona 2", owner: "Poliție", x: 5700, y: 6100, radius: 280, color: "#2f80ff" },
+  { name: "Zona 3", owner: "Mafie", x: 3000, y: 4300, radius: 300, color: "#b14cff" },
+  { name: "Zona 4", owner: "Liber", x: 2500, y: 3500, radius: 220, color: "#41ff31" },
+  { name: "Zona 5", owner: "Cartel", x: 6400, y: 2600, radius: 420, color: "#fbff20" }
 ];
 
+function getImageSize() {
+  return {
+    width: mapImage.naturalWidth || 8192,
+    height: mapImage.naturalHeight || 8192
+  };
+}
+
 function fitMap() {
-  const vw = mapViewport.clientWidth;
-  const vh = mapViewport.clientHeight;
+  const viewportWidth = mapViewport.clientWidth;
+  const viewportHeight = mapViewport.clientHeight;
+  const image = getImageSize();
 
-  const iw = mapImage.naturalWidth || 8192;
-  const ih = mapImage.naturalHeight || 8192;
+  baseScale = Math.max(
+    viewportWidth / image.width,
+    viewportHeight / image.height
+  );
 
-  baseScale = Math.max(vw / iw, vh / ih);
   scale = baseScale;
 
-  posX = (vw - iw * scale) / 2;
-  posY = (vh - ih * scale) / 2;
+  posX = (viewportWidth - image.width * scale) / 2;
+  posY = (viewportHeight - image.height * scale) / 2;
 
- function updateMap() {
-  function clampMap() {
-  const vw = mapViewport.clientWidth;
-  const vh = mapViewport.clientHeight;
-
-  const iw = mapImage.naturalWidth || 8192;
-  const ih = mapImage.naturalHeight || 8192;
-
-  const scaledW = iw * scale;
-  const scaledH = ih * scale;
-
-  if (scaledW <= vw) {
-    posX = (vw - scaledW) / 2;
-  } else {
-    posX = Math.min(0, Math.max(vw - scaledW, posX));
-  }
-
-  if (scaledH <= vh) {
-    posY = (vh - scaledH) / 2;
-  } else {
-    posY = Math.min(0, Math.max(vh - scaledH, posY));
-  }
+  updateMap();
 }
+
+function clampMap() {
+  const viewportWidth = mapViewport.clientWidth;
+  const viewportHeight = mapViewport.clientHeight;
+  const image = getImageSize();
+
+  const scaledWidth = image.width * scale;
+  const scaledHeight = image.height * scale;
+
+  if (scaledWidth > viewportWidth) {
+    const minX = viewportWidth - scaledWidth;
+    const maxX = 0;
+    posX = Math.max(minX, Math.min(maxX, posX));
+  } else {
+    posX = (viewportWidth - scaledWidth) / 2;
+  }
+
+  if (scaledHeight > viewportHeight) {
+    const minY = viewportHeight - scaledHeight;
+    const maxY = 0;
+    posY = Math.max(minY, Math.min(maxY, posY));
+  } else {
+    posY = (viewportHeight - scaledHeight) / 2;
+  }
 }
 
 function updateMap() {
+  clampMap();
   mapLayer.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+}
+
+function zoomFromPoint(oldScale, pointX, pointY) {
+  posX = pointX - (pointX - posX) * (scale / oldScale);
+  posY = pointY - (pointY - posY) * (scale / oldScale);
+  updateMap();
 }
 
 function zoomIn() {
   const oldScale = scale;
-  scale = Math.min(scale + 0.15, baseScale * 5);
-  zoomFromCenter(oldScale);
+  scale = Math.min(scale + 0.15, baseScale * 7);
+  zoomFromPoint(oldScale, mapViewport.clientWidth / 2, mapViewport.clientHeight / 2);
 }
 
 function zoomOut() {
   const oldScale = scale;
   scale = Math.max(scale - 0.15, baseScale);
-  zoomFromCenter(oldScale);
-}
-
-function zoomFromCenter(oldScale) {
-  const cx = mapViewport.clientWidth / 2;
-  const cy = mapViewport.clientHeight / 2;
-
-  posX = cx - (cx - posX) * (scale / oldScale);
-  posY = cy - (cy - posY) * (scale / oldScale);
-
-  updateMap();
+  zoomFromPoint(oldScale, mapViewport.clientWidth / 2, mapViewport.clientHeight / 2);
 }
 
 function resetMap() {
   fitMap();
 }
 
-function turfColor(type) {
-  if (type === "red") return "#ff1f1f";
-  if (type === "green") return "#37ff37";
-  if (type === "yellow") return "#ffff33";
-  return "#b14cff";
-}
-
 function addTurf(turf) {
-  const color = turfColor(turf.type);
-
   const div = document.createElement("div");
   div.className = "mapTurf";
+
   div.style.left = turf.x + "px";
   div.style.top = turf.y + "px";
   div.style.width = turf.radius * 2 + "px";
   div.style.height = turf.radius * 2 + "px";
-  div.style.setProperty("--turf-color", color);
+  div.style.setProperty("--turf-color", turf.color || "#ff2a16");
 
   div.innerHTML = `
     <div class="mapTurfLabel">
@@ -180,17 +193,43 @@ function addTurf(turf) {
 }
 
 function loadTurfs() {
+  document.querySelectorAll(".mapTurf").forEach(el => el.remove());
   turfs.forEach(addTurf);
 }
 
-mapViewport.addEventListener("wheel", e => {
+mapViewport.addEventListener("mousedown", (e) => {
+  dragging = true;
+  dragStartX = e.clientX - posX;
+  dragStartY = e.clientY - posY;
+  mapViewport.style.cursor = "grabbing";
+});
+
+window.addEventListener("mouseup", () => {
+  dragging = false;
+  mapViewport.style.cursor = "grab";
+});
+
+window.addEventListener("mousemove", (e) => {
+  if (!dragging) return;
+
+  posX = e.clientX - dragStartX;
+  posY = e.clientY - dragStartY;
+
+  updateMap();
+});
+
+mapViewport.addEventListener("wheel", (e) => {
   e.preventDefault();
 
+  const oldScale = scale;
+
   if (e.deltaY < 0) {
-    zoomIn();
+    scale = Math.min(scale + 0.08, baseScale * 7);
   } else {
-    zoomOut();
+    scale = Math.max(scale - 0.08, baseScale);
   }
+
+  zoomFromPoint(oldScale, e.clientX, e.clientY);
 }, { passive: false });
 
 mapImage.addEventListener("load", () => {
@@ -198,50 +237,15 @@ mapImage.addEventListener("load", () => {
   loadTurfs();
 });
 
-window.addEventListener("resize", fitMap);
+window.addEventListener("resize", () => {
+  fitMap();
+  loadTurfs();
+});
 
 if (mapImage.complete) {
   fitMap();
   loadTurfs();
 }
-</script>
-}
-
-function turfColor(type) {
-  if (type === "red") return "#ff2a16";
-  if (type === "green") return "#41ff31";
-  if (type === "yellow") return "#fbff20";
-  return "#b14cff";
-}
-
-function addTurf(turf) {
-  const color = turfColor(turf.type);
-
-  const div = document.createElement("div");
-  div.className = "turf";
-  div.style.left = turf.x + "px";
-  div.style.top = turf.y + "px";
-  div.style.width = turf.radius * 2 + "px";
-  div.style.height = turf.radius * 2 + "px";
-  div.style.borderColor = color;
-  div.style.background = color + "44";
-  div.style.boxShadow = `0 0 25px ${color}`;
-
-  div.innerHTML = `
-    <div class="turfText">
-      ${turf.name}
-      <small>${turf.owner}</small>
-    </div>
-  `;
-
-  mapLayer.appendChild(div);
-}
-
-fetch("turfs.json")
-  .then(res => res.json())
-  .then(data => data.forEach(addTurf));
-
-updateMap();
 </script>
 
 </body>
