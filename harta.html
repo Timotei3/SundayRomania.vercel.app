@@ -67,52 +67,101 @@
 </div>
 
 <script>
+<script>
 const mapViewport = document.getElementById("mapViewport");
 const mapLayer = document.getElementById("mapLayer");
 const mapImage = document.getElementById("mapImage");
 
 let scale = 1;
-let startScale = 1;
+let baseScale = 1;
+let posX = 0;
+let posY = 0;
 
-function fitMapToScreen() {
-  const viewportW = mapViewport.clientWidth;
-  const viewportH = mapViewport.clientHeight;
+const turfs = [
+  { name: "Zona 1", owner: "Liber", type: "red", x: 4200, y: 5200, radius: 350 },
+  { name: "Zona 2", owner: "Liber", type: "red", x: 5700, y: 6100, radius: 280 },
+  { name: "Zona 3", owner: "Liber", type: "red", x: 3000, y: 4300, radius: 300 }
+];
 
-  const imageW = mapImage.naturalWidth || 8192;
-  const imageH = mapImage.naturalHeight || 8192;
+function fitMap() {
+  const vw = mapViewport.clientWidth;
+  const vh = mapViewport.clientHeight;
 
-  const scaleX = viewportW / imageW;
-  const scaleY = viewportH / imageH;
+  const iw = mapImage.naturalWidth || 8192;
+  const ih = mapImage.naturalHeight || 8192;
 
-  startScale = Math.max(scaleX, scaleY);
-  scale = startScale;
+  baseScale = Math.max(vw / iw, vh / ih);
+  scale = baseScale;
+
+  posX = (vw - iw * scale) / 2;
+  posY = (vh - ih * scale) / 2;
 
   updateMap();
 }
 
 function updateMap() {
-  mapLayer.style.width = "100%";
-  mapLayer.style.height = "100%";
-  mapLayer.style.transformOrigin = "center center";
-  mapLayer.style.transform = `scale(${scale})`;
+  mapLayer.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
 }
 
 function zoomIn() {
-  scale = Math.min(scale + 0.15, startScale * 5);
-  updateMap();
+  const oldScale = scale;
+  scale = Math.min(scale + 0.15, baseScale * 5);
+  zoomFromCenter(oldScale);
 }
 
 function zoomOut() {
-  scale = Math.max(scale - 0.15, startScale);
+  const oldScale = scale;
+  scale = Math.max(scale - 0.15, baseScale);
+  zoomFromCenter(oldScale);
+}
+
+function zoomFromCenter(oldScale) {
+  const cx = mapViewport.clientWidth / 2;
+  const cy = mapViewport.clientHeight / 2;
+
+  posX = cx - (cx - posX) * (scale / oldScale);
+  posY = cy - (cy - posY) * (scale / oldScale);
+
   updateMap();
 }
 
 function resetMap() {
-  scale = startScale;
-  updateMap();
+  fitMap();
 }
 
-mapViewport.addEventListener("wheel", function(e) {
+function turfColor(type) {
+  if (type === "red") return "#ff1f1f";
+  if (type === "green") return "#37ff37";
+  if (type === "yellow") return "#ffff33";
+  return "#b14cff";
+}
+
+function addTurf(turf) {
+  const color = turfColor(turf.type);
+
+  const div = document.createElement("div");
+  div.className = "mapTurf";
+  div.style.left = turf.x + "px";
+  div.style.top = turf.y + "px";
+  div.style.width = turf.radius * 2 + "px";
+  div.style.height = turf.radius * 2 + "px";
+  div.style.setProperty("--turf-color", color);
+
+  div.innerHTML = `
+    <div class="mapTurfLabel">
+      ${turf.name}
+      <small>${turf.owner}</small>
+    </div>
+  `;
+
+  mapLayer.appendChild(div);
+}
+
+function loadTurfs() {
+  turfs.forEach(addTurf);
+}
+
+mapViewport.addEventListener("wheel", e => {
   e.preventDefault();
 
   if (e.deltaY < 0) {
@@ -122,14 +171,19 @@ mapViewport.addEventListener("wheel", function(e) {
   }
 }, { passive: false });
 
-mapImage.addEventListener("load", fitMapToScreen);
-window.addEventListener("resize", fitMapToScreen);
+mapImage.addEventListener("load", () => {
+  fitMap();
+  loadTurfs();
+});
+
+window.addEventListener("resize", fitMap);
 
 if (mapImage.complete) {
-  fitMapToScreen();
+  fitMap();
+  loadTurfs();
 }
 </script>
-});
+}
 
 function turfColor(type) {
   if (type === "red") return "#ff2a16";
