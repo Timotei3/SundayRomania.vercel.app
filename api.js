@@ -1,6 +1,6 @@
 // Sunday Romania API connector
 // 1) Dupa ce faci deploy pe Render, schimba linkul de mai jos cu linkul tau real.
-const API_URL = "https://LINKUL-TAU-RENDER.onrender.com";
+const API_URL = "https://sundayapi-onrender.onrender.com";
 
 async function getJson(path) {
   const res = await fetch(API_URL + path, { cache: "no-store" });
