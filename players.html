@@ -5,135 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Players | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
   <style>
-    .players-hero{
-      background:#141424;
-      border:1px solid #34345b;
-      border-radius:14px;
-      padding:35px;
-      margin-bottom:20px;
-    }
-
-    .players-hero b{
-      background:#243c9f;
-      color:#8fa8ff;
-      padding:7px 13px;
-      border-radius:6px;
-      font-size:12px;
-      letter-spacing:2px;
-    }
-
-    .players-hero h1{
-      margin-top:18px;
-      font-size:34px;
-      color:#fff;
-    }
-
-    .players-hero p{
-      color:#aaaec7;
-      margin-top:8px;
-    }
-
-    .players-tabs{
-      display:flex;
-      gap:14px;
-      background:#11111d;
-      border:1px solid #272844;
-      border-radius:12px;
-      padding:10px;
-      width:max-content;
-      margin-bottom:20px;
-    }
-
-    .players-tabs button{
-      background:transparent;
-      color:#ddd;
-      padding:12px 24px;
-      border-radius:8px;
-      font-weight:700;
-    }
-
-    .players-tabs button.active{
-      background:#536dfe;
-      color:white;
-    }
-
-    .players-alert{
-      background:#2a1218;
-      color:#ff5f5f;
-      border-radius:10px;
-      padding:16px;
-      margin-bottom:0;
-      display:none;
-    }
-
-    .players-box{
-      background:#11131c;
-      border:1px solid #252840;
-      border-radius:16px;
-      min-height:210px;
-      padding:22px;
-    }
-
-    .players-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-
-    .player-card{
-      background:#1c1b33;
-      border:1px solid #34345b;
-      border-radius:12px;
-      padding:18px;
-    }
-
-    .player-card h3{
-      color:#fff;
-      font-size:18px;
-      margin-bottom:10px;
-    }
-
-    .player-card p{
-      color:#d8d8f0;
-      font-size:14px;
-      margin:6px 0;
-    }
-
-    .online{color:#35d07f;font-weight:800;}
-    .offline{color:#ff5f5f;font-weight:800;}
-
-    .empty-state{
-      height:170px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#8f94ad;
-      text-align:center;
-    }
-
-    .empty-state .icon{
-      font-size:38px;
-      margin-bottom:15px;
-    }
-
-    @media(max-width:1200px){
-      .players-grid{grid-template-columns:repeat(2,1fr);}
-    }
-
-    @media(max-width:700px){
-      .players-grid{grid-template-columns:1fr;}
-      .players-tabs{width:100%;flex-direction:column;}
-    }
+    .players-box{background:#11131c;border:1px solid #252840;border-radius:16px;min-height:210px;padding:22px;}
+    .players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .player-card{background:#1c1b33;border:1px solid #34345b;border-radius:12px;padding:18px;}
+    .player-card h3{color:#fff;font-size:18px;margin-bottom:10px;}
+    .player-card p{color:#d8d8f0;font-size:14px;margin:6px 0;}
+    .empty-state{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8f94ad;text-align:center;}
+    .empty-state .icon{font-size:38px;margin-bottom:15px;}
+    @media(max-width:1200px){.players-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:700px){.players-grid{grid-template-columns:1fr;}}
   </style>
 </head>
-
 <body>
   <aside>
     <div class="brand">
-      <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
+      <img src="SundayRomania.png" alt="Sunday Romania" class="brand-logo">
       <div class="brand-text">
         <span>SUNDAY</span>
         <strong>ROMANIA</strong>
@@ -141,146 +28,26 @@
     </div>
 
     <p>GENERAL</p>
-    <a href="index.html">Dashboard</a>
+    <a href="index.html" >Dashboard</a>
     <a href="regulament.html">Regulament</a>
     <a href="magazin.html">Magazin</a>
     <a href="sugestii.html">Sugestii</a>
     <a href="players.html" class="active">Players</a>
-    <a href="staff.html">Staff Members</a>
-    <a href="banati.html">Jucători Banați</a>
+    <a href="staff.html" >Staff Members</a>
+    <a href="banati.html" >Jucători Banați</a>
     <a href="harta.html">Hartă</a>
 
     <p>FACȚIUNI</p>
     <a href="factiuni.html">Facțiuni</a>
   </aside>
-
   <main>
-    <section class="players-hero">
-      <b>COMUNITATE</b>
-      <h1>Jucători Înregistrați</h1>
-      <p>Explorează lista jucătorilor, facțiunile și echipa administrativă.</p>
+    <header><h2>Players</h2><a class="discord-btn" href="index.html">Dashboard</a></header>
+    <section class="news">
+      <div class="img">PLAYERS</div>
+      <div class="text"><b>LIVE</b><h2>Jucători Online</h2><p>Această listă vine din API-ul de pe Render și se actualizează automat.</p></div>
     </section>
-
-    <div class="players-tabs">
-      <button class="active" onclick="setFilter('all', this)">Toți Jucătorii</button>
-      <button onclick="setFilter('police', this)">Doar Poliție</button>
-      <button onclick="setFilter('staff', this)">Doar Staff</button>
-    </div>
-
-    <div id="playersAlert" class="players-alert">
-      Nu s-au putut încărca utilizatorii.
-    </div>
-
-    <section class="players-box">
-      <div id="playersContainer" class="players-grid"></div>
-    </section>
+    <section class="players-box"><div id="playersContainer" class="players-grid"></div></section>
   </main>
-
-  <script>
-    const PLAYERS_API_URL = "http://91.200.220.10:30176/players";
-
-    let allPlayers = [];
-    let currentFilter = "all";
-
-    function escapeHTML(value){
-      return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    function setFilter(filter, button){
-      currentFilter = filter;
-
-      document.querySelectorAll(".players-tabs button").forEach(btn => {
-        btn.classList.remove("active");
-      });
-
-      button.classList.add("active");
-      renderPlayers();
-    }
-
-    function renderPlayers(){
-      const container = document.getElementById("playersContainer");
-      container.innerHTML = "";
-
-      let players = allPlayers;
-
-      if(currentFilter === "police"){
-        players = players.filter(p => p.faction === "Politie");
-      }
-
-      if(currentFilter === "staff"){
-        players = players.filter(p => p.staff === true);
-      }
-
-      if(players.length === 0){
-        container.innerHTML = `
-          <div class="empty-state" style="grid-column:1/-1;">
-            <div class="icon">📦</div>
-            <p>Niciun jucător găsit cu acest filtru.</p>
-          </div>
-        `;
-        return;
-      }
-
-      players.forEach(player => {
-        const name = escapeHTML(player.name || "Necunoscut");
-        const id = escapeHTML(player.id || "-");
-        const hours = Number(player.hours || 0);
-        const online = player.online === true;
-        const faction = escapeHTML(player.faction || "Fără facțiune");
-
-        const card = document.createElement("div");
-        card.className = "player-card";
-
-        card.innerHTML = `
-          <h3>${name}</h3>
-          <p>ID: ${id}</p>
-          <p>Status:
-            <span class="${online ? "online" : "offline"}">
-              ${online ? "Online" : "Offline"}
-            </span>
-          </p>
-          <p>Ore pe server: ${hours}</p>
-          <p>Facțiune: ${faction}</p>
-        `;
-
-        container.appendChild(card);
-      });
-    }
-
-    async function loadPlayers(){
-      const alert = document.getElementById("playersAlert");
-
-      try{
-        const response = await fetch(PLAYERS_API_URL + "?t=" + Date.now());
-
-        if(!response.ok){
-          throw new Error("API error");
-        }
-
-        const data = await response.json();
-
-        if(!Array.isArray(data)){
-          throw new Error("JSON invalid");
-        }
-
-        allPlayers = data;
-        alert.style.display = "none";
-        renderPlayers();
-
-      }catch(error){
-        alert.style.display = "block";
-        allPlayers = [];
-        renderPlayers();
-      }
-    }
-
-    loadPlayers();
-    setInterval(loadPlayers, 60000);
-  </script>
+<script src="api.js"></script>
 </body>
 </html>

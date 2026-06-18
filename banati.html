@@ -5,112 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jucători Banați | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
   <style>
-    .ban-hero{
-      background:#141424;
-      border:1px solid #34345b;
-      border-radius:14px;
-      padding:35px;
-      margin-bottom:20px;
-    }
-
-    .ban-hero b{
-      background:#8b1e2d;
-      color:#ffb4b4;
-      padding:7px 13px;
-      border-radius:6px;
-      font-size:12px;
-      letter-spacing:2px;
-    }
-
-    .ban-hero h1{
-      margin-top:18px;
-      font-size:34px;
-      color:#fff;
-    }
-
-    .ban-hero p{
-      color:#aaaec7;
-      margin-top:8px;
-    }
-
-    .ban-alert{
-      background:#2a1218;
-      color:#ff5f5f;
-      border-radius:10px;
-      padding:16px;
-      margin-bottom:15px;
-      display:none;
-    }
-
-    .ban-box{
-      background:#11131c;
-      border:1px solid #252840;
-      border-radius:16px;
-      min-height:210px;
-      padding:22px;
-    }
-
-    .ban-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-
-    .ban-card{
-      background:#1c1b33;
-      border:1px solid #4c4680;
-      border-radius:12px;
-      padding:18px;
-    }
-
-    .ban-card h3{
-      color:#fff;
-      font-size:18px;
-      margin-bottom:10px;
-    }
-
-    .ban-card p{
-      color:#d8d8f0;
-      font-size:14px;
-      margin:6px 0;
-    }
-
-    .ban-status{
-      color:#ff5f5f;
-      font-weight:800;
-    }
-
-    .empty-state{
-      height:170px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#8f94ad;
-      text-align:center;
-    }
-
-    .empty-state .icon{
-      font-size:38px;
-      margin-bottom:15px;
-    }
-
-    @media(max-width:1200px){
-      .ban-grid{grid-template-columns:repeat(2,1fr);}
-    }
-
-    @media(max-width:700px){
-      .ban-grid{grid-template-columns:1fr;}
-    }
+    .ban-box{background:#11131c;border:1px solid #252840;border-radius:16px;min-height:210px;padding:22px;}
+    .ban-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .ban-card{background:#1c1b33;border:1px solid #4c4680;border-radius:12px;padding:18px;}
+    .ban-card h3{color:#fff;font-size:18px;margin-bottom:10px;}
+    .ban-card p{color:#d8d8f0;font-size:14px;margin:6px 0;}
+    .ban-status{color:#ff5f5f;font-weight:800;}
+    .empty-state{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8f94ad;text-align:center;}
+    .empty-state .icon{font-size:38px;margin-bottom:15px;}
+    @media(max-width:1200px){.ban-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:700px){.ban-grid{grid-template-columns:1fr;}}
   </style>
 </head>
-
 <body>
   <aside>
     <div class="brand">
-      <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
+      <img src="SundayRomania.png" alt="Sunday Romania" class="brand-logo">
       <div class="brand-text">
         <span>SUNDAY</span>
         <strong>ROMANIA</strong>
@@ -118,112 +29,26 @@
     </div>
 
     <p>GENERAL</p>
-    <a href="index.html">Dashboard</a>
+    <a href="index.html" >Dashboard</a>
     <a href="regulament.html">Regulament</a>
     <a href="magazin.html">Magazin</a>
     <a href="sugestii.html">Sugestii</a>
-    <a href="players.html">Players</a>
-    <a href="staff.html">Staff Members</a>
+    <a href="players.html" >Players</a>
+    <a href="staff.html" >Staff Members</a>
     <a href="banati.html" class="active">Jucători Banați</a>
     <a href="harta.html">Hartă</a>
 
     <p>FACȚIUNI</p>
     <a href="factiuni.html">Facțiuni</a>
   </aside>
-
   <main>
-    <section class="ban-hero">
-      <b>SUNDAY ROMANIA</b>
-      <h1>Jucători Banați</h1>
-      <p>Lista jucătorilor banați de pe serverul Sunday Romania Roleplay.</p>
+    <header><h2>Jucători Banați</h2><a class="discord-btn" href="index.html">Dashboard</a></header>
+    <section class="news">
+      <div class="img">BAN</div>
+      <div class="text"><b>SUNDAY ROMANIA</b><h2>Lista jucătorilor banați</h2><p>Această listă vine din API-ul de pe Render și se actualizează automat.</p></div>
     </section>
-
-    <div id="banAlert" class="ban-alert">
-      Nu s-au putut încărca jucătorii banați.
-    </div>
-
-    <section class="ban-box">
-      <div id="banContainer" class="ban-grid"></div>
-    </section>
+    <section class="ban-box"><div id="banContainer" class="ban-grid"></div></section>
   </main>
-
-  <script>
-    const BANS_API_URL = "http://91.200.220.10:30176/bans";
-
-    function escapeHTML(value){
-      return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    async function loadBans(){
-      const container = document.getElementById("banContainer");
-      const alert = document.getElementById("banAlert");
-
-      try{
-        const response = await fetch(BANS_API_URL + "?t=" + Date.now());
-
-        if(!response.ok){
-          throw new Error("API error");
-        }
-
-        const bans = await response.json();
-
-        if(!Array.isArray(bans)){
-          throw new Error("JSON invalid");
-        }
-
-        alert.style.display = "none";
-        container.innerHTML = "";
-
-        if(bans.length === 0){
-          container.innerHTML = `
-            <div class="empty-state" style="grid-column:1/-1;">
-              <div class="icon">📦</div>
-              <p>Niciun jucător banat găsit.</p>
-            </div>
-          `;
-          return;
-        }
-
-        bans.forEach(ban => {
-          const name = escapeHTML(ban.name || "Necunoscut");
-          const reason = escapeHTML(ban.reason || "Fără motiv");
-          const staff = escapeHTML(ban.staff || "Staff");
-          const date = escapeHTML(ban.date || "Necunoscut");
-          const duration = escapeHTML(ban.duration || "Permanent");
-
-          const card = document.createElement("div");
-          card.className = "ban-card";
-
-          card.innerHTML = `
-            <h3>${name}</h3>
-            <p>Status: <span class="ban-status">Banat</span></p>
-            <p>Motiv: ${reason}</p>
-            <p>Durată: ${duration}</p>
-            <p>Staff: ${staff}</p>
-            <p>Data: ${date}</p>
-          `;
-
-          container.appendChild(card);
-        });
-
-      }catch(error){
-        alert.style.display = "block";
-        container.innerHTML = `
-          <div class="empty-state" style="grid-column:1/-1;">
-            <div class="icon">📦</div>
-            <p>Niciun jucător găsit cu acest filtru.</p>
-          </div>
-        `;
-      }
-    }
-
-    loadBans();
-    setInterval(loadBans, 60000);
-  </script>
+<script src="api.js"></script>
 </body>
 </html>

@@ -6,74 +6,11 @@
   <title>Staff Members | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
 
-  <style>
-    .staff-rank{
-      background:#1c1b33;
-      border:1px solid #4c4680;
-      border-radius:14px;
-      padding:25px;
-      margin-bottom:22px;
-    }
-
-    .staff-rank h2{
-      color:#fff;
-      font-size:26px;
-      margin-bottom:18px;
-    }
-
-    .staff-list{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      gap:14px;
-    }
-
-    .staff-member{
-      background:#11111d;
-      border:1px solid #34345b;
-      border-radius:12px;
-      padding:16px;
-    }
-
-    .staff-member h3{
-      color:white;
-      font-size:18px;
-      margin-bottom:8px;
-    }
-
-    .staff-member p{
-      color:#d8d8f0;
-      font-size:14px;
-      margin:5px 0;
-    }
-
-    .online{
-      color:#35d07f;
-      font-weight:800;
-    }
-
-    .offline{
-      color:#ff5f5f;
-      font-weight:800;
-    }
-
-    @media(max-width:1200px){
-      .staff-list{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:700px){
-      .staff-list{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
 </head>
-
 <body>
   <aside>
     <div class="brand">
-      <img src="SundayRomania.png" class="brand-logo" alt="Sunday Romania">
+      <img src="SundayRomania.png" alt="Sunday Romania" class="brand-logo">
       <div class="brand-text">
         <span>SUNDAY</span>
         <strong>ROMANIA</strong>
@@ -81,162 +18,26 @@
     </div>
 
     <p>GENERAL</p>
-    <a href="index.html">Dashboard</a>
+    <a href="index.html" >Dashboard</a>
     <a href="regulament.html">Regulament</a>
     <a href="magazin.html">Magazin</a>
     <a href="sugestii.html">Sugestii</a>
-    <a href="players.html">Players</a>
+    <a href="players.html" >Players</a>
     <a href="staff.html" class="active">Staff Members</a>
-    <a href="banati.html">Jucători Banați</a>
+    <a href="banati.html" >Jucători Banați</a>
     <a href="harta.html">Hartă</a>
 
     <p>FACȚIUNI</p>
     <a href="factiuni.html">Facțiuni</a>
   </aside>
-
   <main>
-    <header>
-      <h2>Staff Members</h2>
-      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">
-        Discord
-      </a>
-    </header>
-
+    <header><h2>Staff Members</h2><a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">Discord</a></header>
     <section class="news">
       <div class="img">STAFF</div>
-      <div class="text">
-        <b>SUNDAY ROMANIA</b>
-        <h2>Echipa Administrativă</h2>
-        <p>Staff-ul se actualizează automat din API: online/offline și ore jucate.</p>
-        <span id="staffStatus">Se încarcă staff-ul...</span>
-      </div>
+      <div class="text"><b>SUNDAY ROMANIA</b><h2>Echipa Administrativă</h2><p>Staff-ul se actualizează automat din API: online/offline și grad.</p></div>
     </section>
-
     <div id="staffContainer"></div>
   </main>
-
-  <script>
-    const STAFF_API_URL = "http://91.200.220.10:30176/staff";
-
-    const rankOrder = [
-      "Community Founder",
-      "Co-Founder",
-      "Supervisor",
-      "Head Of Staff",
-      "Head Admin",
-      "Administrator",
-      "Moderator Avansat",
-      "Moderator",
-      "Helper Avansat",
-      "Helper",
-      "Helper in Teste"
-    ];
-
-    const rankIcons = {
-      "Community Founder": "🔴",
-      "Co-Founder": "🔴",
-      "Supervisor": "⚪",
-      "Head Of Staff": "⚪",
-      "Head Admin": "🟤",
-      "Administrator": "🟠",
-      "Moderator Avansat": "🔵",
-      "Moderator": "🔵",
-      "Helper Avansat": "🟢",
-      "Helper": "🟢",
-      "Helper in Teste": "🟢"
-    };
-
-    function escapeHTML(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    async function loadStaff() {
-      const container = document.getElementById("staffContainer");
-      const status = document.getElementById("staffStatus");
-
-      try {
-        const response = await fetch(STAFF_API_URL + "?t=" + Date.now());
-
-        if (!response.ok) {
-          throw new Error("API error");
-        }
-
-        const staff = await response.json();
-
-        if (!Array.isArray(staff)) {
-          throw new Error("API-ul nu returnează listă JSON.");
-        }
-
-        container.innerHTML = "";
-
-        let totalMembers = 0;
-
-        rankOrder.forEach(rank => {
-          const members = staff.filter(member => member.rank === rank);
-
-          if (members.length === 0) return;
-
-          totalMembers += members.length;
-
-          const cards = members.map(member => {
-            const name = escapeHTML(member.name || "Necunoscut");
-            const hours = Number(member.hours || 0);
-            const online = member.online === true;
-
-            return `
-              <div class="staff-member">
-                <h3>${name}</h3>
-                <p>Status:
-                  <span class="${online ? "online" : "offline"}">
-                    ${online ? "Online" : "Offline"}
-                  </span>
-                </p>
-                <p>Ore pe server: ${hours}</p>
-              </div>
-            `;
-          }).join("");
-
-          const section = document.createElement("section");
-          section.className = "staff-rank";
-          section.innerHTML = `
-            <h2>${rankIcons[rank] || "👤"} ${rank}</h2>
-            <div class="staff-list">
-              ${cards}
-            </div>
-          `;
-
-          container.appendChild(section);
-        });
-
-        if (totalMembers === 0) {
-          container.innerHTML = `
-            <section class="staff-rank">
-              <h2>Nu există staff afișat</h2>
-              <p>API-ul funcționează, dar nu a returnat membri staff.</p>
-            </section>
-          `;
-        }
-
-        status.innerText = "Staff actualizat automat.";
-
-      } catch (error) {
-        status.innerText = "Nu s-a putut încărca staff-ul. Verifică API-ul.";
-        container.innerHTML = `
-          <section class="staff-rank">
-            <h2>API neconectat</h2>
-            <p>Verifică dacă resource-ul staff_api este pornit și dacă linkul API este corect.</p>
-          </section>
-        `;
-      }
-    }
-
-    loadStaff();
-    setInterval(loadStaff, 60000);
-  </script>
+<script src="api.js"></script>
 </body>
 </html>
