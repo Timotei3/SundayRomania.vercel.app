@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Players | Sunday Romania</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .players-box{background:#11131c;border:1px solid #252840;border-radius:16px;min-height:210px;padding:22px;}
+    .players-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .player-card{background:#1c1b33;border:1px solid #34345b;border-radius:12px;padding:18px;}
+    .player-card h3{color:#fff;font-size:18px;margin-bottom:10px;}
+    .player-card p{color:#d8d8f0;font-size:14px;margin:6px 0;}
+    .empty-state{height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8f94ad;text-align:center;}
+    .empty-state .icon{font-size:38px;margin-bottom:15px;}
+    @media(max-width:1200px){.players-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:700px){.players-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <img src="SundayRomania.png" alt="Sunday Romania" class="brand-logo">
+      <div class="brand-text">
+        <span>SUNDAY</span>
+        <strong>ROMANIA</strong>
+      </div>
+    </div>
+
+    <p>GENERAL</p>
+    <a href="index.html" >Dashboard</a>
+    <a href="regulament.html">Regulament</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="sugestii.html">Sugestii</a>
+    <a href="players.html" class="active">Players</a>
+    <a href="staff.html" >Staff Members</a>
+    <a href="banati.html" >Jucători Banați</a>
+    <a href="harta.html">Hartă</a>
+
+    <p>FACȚIUNI</p>
+    <a href="factiuni.html">Facțiuni</a>
+  </aside>
+  <main>
+    <header><h2>Players</h2><a class="discord-btn" href="index.html">Dashboard</a></header>
+    <section class="news">
+      <div class="img">PLAYERS</div>
+      <div class="text"><b>LIVE</b><h2>Jucători Online</h2><p>Această listă vine din API-ul de pe Render și se actualizează automat.</p></div>
+    </section>
+    <section class="players-box"><div id="playersContainer" class="players-grid"></div></section>
+  </main>
+<script src="api.js"></script>
+</body>
+</html>

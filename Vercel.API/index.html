@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sunday Romania</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <aside>
+    <div class="brand">
+      <img src="SundayRomania.png" alt="Sunday Romania" class="brand-logo">
+      <div class="brand-text">
+        <span>SUNDAY</span>
+        <strong>ROMANIA</strong>
+      </div>
+    </div>
+
+    <p>GENERAL</p>
+    <a href="index.html" class="active">Dashboard</a>
+    <a href="regulament.html">Regulament</a>
+    <a href="magazin.html">Magazin</a>
+    <a href="sugestii.html">Sugestii</a>
+    <a href="players.html" >Players</a>
+    <a href="staff.html" >Staff Members</a>
+    <a href="banati.html" >Jucători Banați</a>
+    <a href="harta.html">Hartă</a>
+
+    <p>FACȚIUNI</p>
+    <a href="factiuni.html">Facțiuni</a>
+  </aside>
+  <main>
+    <header>
+      <h2>Dashboard</h2>
+      <a class="discord-btn" href="https://discord.gg/RcaAPRGTW" target="_blank">Login cu Discord</a>
+    </header>
+
+    <section class="cards">
+      <div><h3 id="playersOnlineCount">0</h3><span>JUCĂTORI ONLINE</span></div>
+      <div><h3 id="bannedPlayersCount">0</h3><span>JUCĂTORI BANAȚI</span></div>
+      <div><h3 id="totalStaffCount">0</h3><span>TOTAL ADMINI</span></div>
+      <div><h3 id="casesCount">0</h3><span>CASE PE SERVER</span></div>
+    </section>
+
+    <section class="news">
+      <div class="img">SUNDAY<br>ROMANIA</div>
+      <div class="text">
+        <b>LIVE API</b>
+        <h2>Dashboard conectat la server</h2>
+        <p>Numerele de mai sus se actualizează automat din API-ul de pe Render.</p>
+        <span>Actualizare automată la 30 secunde →</span>
+      </div>
+    </section>
+  </main>
+<script src="api.js"></script>
+</body>
+</html>
