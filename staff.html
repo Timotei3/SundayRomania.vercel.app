@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Members | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
   <aside>
@@ -18,26 +17,44 @@
     </div>
 
     <p>GENERAL</p>
-    <a href="index.html" >Dashboard</a>
+    <a href="index.html">Dashboard</a>
     <a href="regulament.html">Regulament</a>
     <a href="magazin.html">Magazin</a>
     <a href="sugestii.html">Sugestii</a>
-    <a href="players.html" >Players</a>
+    <a href="players.html">Players</a>
     <a href="staff.html" class="active">Staff Members</a>
-    <a href="banati.html" >Jucători Banați</a>
+    <a href="banati.html">Jucători Banați</a>
     <a href="harta.html">Hartă</a>
 
     <p>FACȚIUNI</p>
     <a href="factiuni.html">Facțiuni</a>
   </aside>
+
   <main>
-    <header><h2>Staff Members</h2><a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">Discord</a></header>
+    <header>
+      <h2>Staff Members</h2>
+      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">Discord</a>
+    </header>
+
     <section class="news">
       <div class="img">STAFF</div>
-      <div class="text"><b>SUNDAY ROMANIA</b><h2>Echipa Administrativă</h2><p></p></div>
+      <div class="text">
+        <b>SUNDAY ROMANIA</b>
+        <h2>Echipa Administrativă</h2>
+        <p>Lista staff-ului online, gradele, orele și ticketele făcute.</p>
+      </div>
     </section>
-    <div id="staffContainer"></div>
+
+    <section class="staff-panel">
+      <div id="staffContainer">
+        <section class="staff-rank">
+          <h2>Staff</h2>
+          <p>Se încarcă lista staff...</p>
+        </section>
+      </div>
+    </section>
   </main>
-<script src="api.js"></script>
+
+  <script src="api.js"></script>
 </body>
 </html>
