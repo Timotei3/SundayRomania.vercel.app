@@ -100,17 +100,53 @@ async function loadStaffPage() {
       </div>
     </section>
   `).join("");
-}
-
 async function loadBansPage() {
   const bans = await getJson("/api/bans");
   const container = document.getElementById("banContainer") || document.getElementById("bansList");
   if (!container) return;
 
   if (!bans.length) {
-    container.innerHTML = `<div class="empty-state"><div class="icon">✅</div><h3>Nu există jucători banați</h3><p>Lista se actualizează automat din API.</p></div>`;
+    container.innerHTML = `
+      <section class="bans-box">
+        <p>Nu există jucători banați.</p>
+      </section>
+    `;
     return;
   }
+
+  container.innerHTML = `
+    <section class="bans-box">
+      <div class="bans-table">
+        <div class="bans-head">
+          <div>ID</div>
+          <div>JUCĂTOR</div>
+          <div>ADMIN</div>
+          <div>MOTIV</div>
+          <div>DATA BAN</div>
+          <div>EXPIRĂ LA</div>
+        </div>
+
+        ${bans.map(b => {
+          const expire = b.expires || b.expire || b.expireAt || b.expiresAt || "-";
+          const isPermanent = b.permanent === true || String(expire).toUpperCase() === "PERMANENT";
+
+          return `
+            <div class="bans-row">
+              <div class="ban-id">#${escapeHtml(b.id ?? b.banId ?? "-")}</div>
+              <div class="ban-player">${escapeHtml(b.name || b.player || b.playerName || "Jucător")}</div>
+              <div class="ban-admin">${escapeHtml(b.admin || b.bannedBy || b.adminName || "-")}</div>
+              <div class="ban-reason">${escapeHtml(b.reason || b.motiv || "-")}</div>
+              <div class="ban-date">${escapeHtml(b.date || b.banDate || b.createdAt || "-")}</div>
+              <div class="ban-expire">
+                ${isPermanent ? `<span class="permanent">PERMANENT</span>` : escapeHtml(expire)}
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `;
+}
 
   container.innerHTML = bans.map(b => `
     <div class="ban-card">
