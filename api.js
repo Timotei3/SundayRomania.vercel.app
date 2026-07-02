@@ -33,13 +33,28 @@ async function loadDashboardStats() {
 
 async function loadPlayersPage() {
   const players = await getJson("/api/players");
-  const container = document.getElementById("playersContainer") || document.getElementById("playersList");
+  const container = document.getElementById("playersContainer");
   if (!container) return;
 
   if (!players.length) {
-    container.innerHTML = `<div class="empty-state"><div class="icon">👥</div><h3>Nu sunt jucători online</h3><p>Lista se actualizează automat din server.</p></div>`;
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nu sunt jucători online</h3>
+        <p>Lista se actualizează automat din server.</p>
+      </div>
+    `;
     return;
   }
+
+  container.innerHTML = players.map(p => `
+    <div class="player-row">
+      <div class="player-id">#${escapeHtml(p.id ?? p.user_id ?? "-")}</div>
+      <div class="player-name">${escapeHtml(p.name || p.fivemName || "Player")}</div>
+      <div class="player-faction">${escapeHtml(p.faction || p.factiune || "Civil")}</div>
+      <div class="player-hours">${escapeHtml(p.hours ?? p.ore ?? 0)} ore</div>
+    </div>
+  `).join("");
+}
 
   container.innerHTML = players.map(p => `
     <div class="player-card">
