@@ -57,26 +57,29 @@ async function loadStaffPage() {
   if (!container) return;
 
   if (!staff.length) {
-    container.innerHTML = `<section class="staff-rank"><h2>Staff</h2><p>Nu există staff configurat.</p></section>`;
+    container.innerHTML = `<section class="staff-rank"><h2>Staff Online</h2><p>Nu există staff online.</p></section>`;
     return;
   }
 
   const groups = {};
   staff.forEach(s => {
-    const level = s.level || "Staff";
-    if (!groups[level]) groups[level] = [];
-    groups[level].push(s);
+    const grad = s.grad || s.level || "Staff";
+    if (!groups[grad]) groups[grad] = [];
+    groups[grad].push(s);
   });
 
-  container.innerHTML = Object.entries(groups).map(([level, members]) => `
+  container.innerHTML = Object.entries(groups).map(([grad, members]) => `
     <section class="staff-rank">
-      <h2>${escapeHtml(level)}</h2>
-      <div class="staff-list">
+      <h2>${escapeHtml(grad)} <span>${members.length}</span></h2>
+
+      <div class="staff-table">
         ${members.map(s => `
-          <div class="staff-member">
-            <h3>${escapeHtml(s.name || "Staff")}</h3>
-            <p>Grad: ${escapeHtml(s.level || level)}</p>
-            <p>Status: ${s.online ? '<span class="online">Online</span>' : '<span class="offline">Offline</span>'}</p>
+          <div class="staff-row">
+            <div class="staff-id">#${escapeHtml(s.id ?? s.user_id ?? "-")}</div>
+            <div class="staff-name">${escapeHtml(s.name || "Staff")}</div>
+            <div class="staff-grad">${escapeHtml(s.grad || s.level || grad)}</div>
+            <div class="staff-hours">${escapeHtml(s.hours ?? s.ore ?? 0)} ore</div>
+            <div class="staff-tickets">${escapeHtml(s.tickets ?? 0)} tickete</div>
           </div>
         `).join("")}
       </div>
