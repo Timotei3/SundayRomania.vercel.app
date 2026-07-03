@@ -1206,11 +1206,21 @@ body.map-page .map-content{
   margin-top: 2px;
 }
 
-.players-header{
+.players-header,
+.player-row{
     display:grid;
-    grid-template-columns:80px 2fr 180px 100px 80px;
+
+    grid-template-columns:
+        minmax(70px,0.8fr)
+        minmax(250px,2.5fr)
+        minmax(180px,1.5fr)
+        minmax(100px,0.8fr)
+        minmax(80px,0.8fr);
 
     align-items:center;
+}
+
+.players-header{
 
     background:#11131c;
 
@@ -1222,7 +1232,32 @@ body.map-page .map-content{
 
     text-transform:uppercase;
 
-    padding:18px 20px;
+    letter-spacing:1px;
+
+    padding:18px 24px;
 
     border-bottom:1px solid #34345b;
+}
+
+.player-row{
+
+    padding:16px 24px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    transition:.2s;
+
+}
+
+.player-row:hover{
+
+    background:rgba(168,85,247,.08);
+
+}
+
+.players-header div,
+.player-row div{
+
+    text-align:center;
+
 }
