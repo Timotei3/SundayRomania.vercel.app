@@ -1394,3 +1394,34 @@ body.map-page .map-content{
     display:none;
 
 }
+
+  /* FIX FINAL - tabele egale */
+
+.players-header,
+.player-row,
+.staff-row {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  align-items: center !important;
+}
+
+.players-header div,
+.player-row div,
+.staff-row div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.player-row,
+.staff-row {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: .2s;
+}
+
+.player-row:hover,
+.staff-row:hover {
+  background: rgba(168,85,247,.08);
+}
