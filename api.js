@@ -1,164 +1,241 @@
-// Sunday Romania API connector
-// 1) Dupa ce faci deploy pe Render, schimba linkul de mai jos cu linkul tau real.
+// Sunday Romania - Website API
 const API_URL = "https://sundayapi-onrender.onrender.com";
 
+let cachedPlayers = [];
+let cachedStaff = [];
+let cachedBans = [];
+
 async function getJson(path) {
-  const res = await fetch(API_URL + path, { cache: "no-store" });
-  if (!res.ok) throw new Error("API error " + path + " -> " + res.status);
-  return res.json();
+  const response = await fetch(API_URL + path, {
+    cache: "no-store"
+  });
+
+  if (!response.ok) {
+    throw new Error("API error: " + path + " -> " + response.status);
+  }
+
+  return response.json();
 }
 
 function setText(id, value) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = value;
+  const element = document.getElementById(id);
+
+  if (element) {
+    element.textContent = value;
+  }
 }
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>'"]/g, c => ({
+  return String(value ?? "").replace(/[&<>'"]/g, char => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     "'": "&#39;",
     '"': "&quot;"
-  }[c]));
+  }[char]));
 }
 
+/* DASHBOARD */
 async function loadDashboardStats() {
-  const data = await getJson("/api/status");
-  setText("playersOnlineCount", data.playersOnline ?? 0);
-  setText("bannedPlayersCount", data.bannedPlayers ?? 0);
-  setText("totalStaffCount", data.totalStaff ?? 0);
-  setText("casesCount", data.cases ?? 0);
+  try {
+    const data = await getJson("/api/status");
+
+    setText("playersOnlineCount", data.playersOnline ?? 0);
+    setText("bannedPlayersCount", data.bannedPlayers ?? 0);
+    setText("totalStaffCount", data.totalStaff ?? 0);
+    setText("casesCount", data.cases ?? 0);
+  } catch (error) {
+    console.error("Dashboard error:", error);
+  }
 }
 
+/* PLAYERS */
 async function loadPlayersPage() {
-  const players = await getJson("/api/players");
+  const container = document.getElementById("playersContainer");
+  if (!container) return;
+
+  try {
+    cachedPlayers = await getJson("/api/players");
+    renderPlayers(cachedPlayers);
+  } catch (error) {
+    console.error("Players error:", error);
+
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nu s-au putut încărca jucătorii.</h3>
+      </div>
+    `;
+  }
+}
+
+function renderPlayers(players) {
   const container = document.getElementById("playersContainer");
   if (!container) return;
 
   if (!players.length) {
     container.innerHTML = `
       <div class="empty-state">
-        <h3>Nu sunt jucători online</h3>
-        <p>Lista se actualizează automat din server.</p>
+        <h3>Nu sunt jucători online.</h3>
       </div>
     `;
     return;
   }
 
-  container.innerHTML = players.map(p => `
+  container.innerHTML = players.map(player => `
     <div class="player-row">
-      <div class="player-id">#${escapeHtml(p.id ?? p.user_id ?? "-")}</div>
-      <div class="player-name">${escapeHtml(p.name || p.fivemName || "Player")}</div>
-      <div class="player-faction">${escapeHtml(p.faction || p.factiune || "Civil")}</div>
-      <div class="player-hours">${escapeHtml(p.hours ?? p.ore ?? 0)} ore</div>
+      <div>${escapeHtml(player.id ?? player.user_id ?? "-")}</div>
+      <div>${escapeHtml(player.name ?? player.fivemName ?? "Player")}</div>
+      <div>${escapeHtml(player.faction ?? player.factiune ?? "Civil")}</div>
+      <div>${escapeHtml(player.hours ?? player.ore ?? 0)}</div>
+      <div>${escapeHtml(player.ping ?? "-")}</div>
     </div>
   `).join("");
 }
 
-  container.innerHTML = players.map(p => `
-    <div class="player-card">
-      <h3>${escapeHtml(p.name || "Player")}</h3>
-      <p>ID: ${escapeHtml(p.id ?? "-")}</p>
-      <p>Ping: ${escapeHtml(p.ping ?? "-")}</p>
-      <p>Status: <span class="online">Online</span></p>
-    </div>
-  `).join("");
-}
-
+/* STAFF */
 async function loadStaffPage() {
-  const staff = await getJson("/api/staff");
-  const container = document.getElementById("staffContainer") || document.getElementById("staffList");
+  const container = document.getElementById("staffContainer");
+  if (!container) return;
+
+  try {
+    cachedStaff = await getJson("/api/staff");
+    renderStaff(cachedStaff);
+  } catch (error) {
+    console.error("Staff error:", error);
+
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nu s-a putut încărca staff-ul.</h3>
+      </div>
+    `;
+  }
+}
+
+function renderStaff(staff) {
+  const container = document.getElementById("staffContainer");
   if (!container) return;
 
   if (!staff.length) {
-    container.innerHTML = `<section class="staff-rank"><h2>Staff Online</h2><p>Nu există staff online.</p></section>`;
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nu există staff afișat.</h3>
+      </div>
+    `;
     return;
   }
 
-  const groups = {};
-  staff.forEach(s => {
-    const grad = s.grad || s.level || "Staff";
-    if (!groups[grad]) groups[grad] = [];
-    groups[grad].push(s);
-  });
-
-  container.innerHTML = Object.entries(groups).map(([grad, members]) => `
-    <section class="staff-rank">
-      <h2>${escapeHtml(grad)} <span>${members.length}</span></h2>
-
-      <div class="staff-table">
-        ${members.map(s => `
-          <div class="staff-row">
-            <div class="staff-id">#${escapeHtml(s.id ?? s.user_id ?? "-")}</div>
-            <div class="staff-name">${escapeHtml(s.name || "Staff")}</div>
-            <div class="staff-grad">${escapeHtml(s.grad || s.level || grad)}</div>
-            <div class="staff-hours">${escapeHtml(s.hours ?? s.ore ?? 0)} ore</div>
-            <div class="staff-tickets">${escapeHtml(s.tickets ?? 0)} tickete</div>
-          </div>
-        `).join("")}
-      </div>
-    </section>
+  container.innerHTML = staff.map(member => `
+    <div class="staff-row">
+      <div>${escapeHtml(member.id ?? member.user_id ?? "-")}</div>
+      <div>${escapeHtml(member.name ?? "Staff")}</div>
+      <div>${escapeHtml(member.grade ?? member.grad ?? member.level ?? "Staff")}</div>
+      <div>${escapeHtml(member.hours ?? member.ore ?? 0)}</div>
+      <div>${escapeHtml(member.tickets ?? 0)}</div>
+    </div>
   `).join("");
+}
+
+/* BANS */
 async function loadBansPage() {
-  const bans = await getJson("/api/bans");
-  const container = document.getElementById("banContainer") || document.getElementById("bansList");
+  const container = document.getElementById("banContainer");
+  if (!container) return;
+
+  try {
+    cachedBans = await getJson("/api/bans");
+    renderBans(cachedBans);
+  } catch (error) {
+    console.error("Bans error:", error);
+
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Nu s-au putut încărca banurile.</h3>
+      </div>
+    `;
+  }
+}
+
+function renderBans(bans) {
+  const container = document.getElementById("banContainer");
   if (!container) return;
 
   if (!bans.length) {
     container.innerHTML = `
-      <section class="bans-box">
-        <p>Nu există jucători banați.</p>
-      </section>
+      <div class="empty-state">
+        <h3>Nu există banuri afișate.</h3>
+      </div>
     `;
     return;
   }
 
-  container.innerHTML = `
-    <section class="bans-box">
-      <div class="bans-table">
-        <div class="bans-head">
-          <div>ID</div>
-          <div>JUCĂTOR</div>
-          <div>ADMIN</div>
-          <div>MOTIV</div>
-          <div>DATA BAN</div>
-          <div>EXPIRĂ LA</div>
-        </div>
+  container.innerHTML = bans.map(ban => {
+    const expires = ban.expires ?? ban.expire ?? ban.expiresAt ?? ban.expireAt ?? "Permanent";
 
-        ${bans.map(b => {
-          const expire = b.expires || b.expire || b.expireAt || b.expiresAt || "-";
-          const isPermanent = b.permanent === true || String(expire).toUpperCase() === "PERMANENT";
-
-          return `
-            <div class="bans-row">
-              <div class="ban-id">#${escapeHtml(b.id ?? b.banId ?? "-")}</div>
-              <div class="ban-player">${escapeHtml(b.name || b.player || b.playerName || "Jucător")}</div>
-              <div class="ban-admin">${escapeHtml(b.admin || b.bannedBy || b.adminName || "-")}</div>
-              <div class="ban-reason">${escapeHtml(b.reason || b.motiv || "-")}</div>
-              <div class="ban-date">${escapeHtml(b.date || b.banDate || b.createdAt || "-")}</div>
-              <div class="ban-expire">
-                ${isPermanent ? `<span class="permanent">PERMANENT</span>` : escapeHtml(expire)}
-              </div>
-            </div>
-          `;
-        }).join("")}
+    return `
+      <div class="ban-row">
+        <div>${escapeHtml(ban.id ?? ban.banId ?? "-")}</div>
+        <div>${escapeHtml(ban.player ?? ban.name ?? ban.playerName ?? "Jucător")}</div>
+        <div>${escapeHtml(ban.admin ?? ban.bannedBy ?? ban.adminName ?? "-")}</div>
+        <div>${escapeHtml(ban.reason ?? ban.motiv ?? "-")}</div>
+        <div>${escapeHtml(ban.date ?? ban.banDate ?? ban.createdAt ?? "-")}</div>
+        <div>${escapeHtml(expires)}</div>
       </div>
-    </section>
-  `;
+    `;
+  }).join("");
 }
 
-  container.innerHTML = bans.map(b => `
-    <div class="ban-card">
-      <h3>${escapeHtml(b.name || "Jucător")}</h3>
-      <p>Motiv: ${escapeHtml(b.reason || "-")}</p>
-      <p>Banat de: ${escapeHtml(b.bannedBy || "-")}</p>
-      <p>Data: ${escapeHtml(b.date || "-")}</p>
-      <p>Status: <span class="ban-status">Banat</span></p>
-    </div>
-  `).join("");
+/* SEARCH */
+function setupSearchInputs() {
+  const playerSearch = document.getElementById("playerSearch");
+
+  if (playerSearch) {
+    playerSearch.addEventListener("input", () => {
+      const value = playerSearch.value.toLowerCase().trim();
+
+      const filtered = cachedPlayers.filter(player =>
+        String(player.id ?? player.user_id ?? "").toLowerCase().includes(value) ||
+        String(player.name ?? player.fivemName ?? "").toLowerCase().includes(value) ||
+        String(player.faction ?? player.factiune ?? "").toLowerCase().includes(value)
+      );
+
+      renderPlayers(value ? filtered : cachedPlayers);
+    });
+  }
+
+  const staffSearch = document.getElementById("staffSearch");
+
+  if (staffSearch) {
+    staffSearch.addEventListener("input", () => {
+      const value = staffSearch.value.toLowerCase().trim();
+
+      const filtered = cachedStaff.filter(member =>
+        String(member.id ?? member.user_id ?? "").toLowerCase().includes(value) ||
+        String(member.name ?? "").toLowerCase().includes(value) ||
+        String(member.grade ?? member.grad ?? member.level ?? "").toLowerCase().includes(value)
+      );
+
+      renderStaff(value ? filtered : cachedStaff);
+    });
+  }
+
+  const banSearch = document.getElementById("banSearch");
+
+  if (banSearch) {
+    banSearch.addEventListener("input", () => {
+      const value = banSearch.value.toLowerCase().trim();
+
+      const filtered = cachedBans.filter(ban =>
+        String(ban.id ?? ban.banId ?? "").toLowerCase().includes(value) ||
+        String(ban.player ?? ban.name ?? ban.playerName ?? "").toLowerCase().includes(value) ||
+        String(ban.admin ?? ban.bannedBy ?? ban.adminName ?? "").toLowerCase().includes(value) ||
+        String(ban.reason ?? ban.motiv ?? "").toLowerCase().includes(value)
+      );
+
+      renderBans(value ? filtered : cachedBans);
+    });
+  }
 }
 
+/* AUTO REFRESH */
 async function refreshAllApiData() {
   await Promise.allSettled([
     loadDashboardStats(),
@@ -169,6 +246,8 @@ async function refreshAllApiData() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupSearchInputs();
   refreshAllApiData();
+
   setInterval(refreshAllApiData, 30000);
 });
