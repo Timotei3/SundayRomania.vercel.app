@@ -5,7 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Staff Members | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .staff-grid {
+      grid-template-columns: 0.7fr 3fr 2fr 1fr 1fr !important;
+    }
+
+    .staff-grid div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .staff-grid div:nth-child(2) {
+      justify-content: flex-start;
+      text-align: left;
+    }
+  </style>
 </head>
+
 <body>
   <aside>
     <div class="brand">
@@ -33,7 +52,7 @@
   <main>
     <header>
       <h2>Staff Members</h2>
-      <a class="discord-btn" href="https://discord.gg/Z9EnZnHhjQ" target="_blank">Discord</a>
+      <a class="discord-btn" href="index.html">Dashboard</a>
     </header>
 
     <section class="news">
@@ -46,47 +65,33 @@
     </section>
 
     <section class="players-box">
-
-    <div class="players-title">
-
+      <div class="players-title">
         <h2>Staff Members</h2>
 
         <input
-            type="text"
-            id="staffSearch"
-            class="players-search"
-            placeholder="🔍 Caută membru staff..."
+          type="text"
+          id="staffSearch"
+          class="players-search"
+          placeholder="🔍 Caută membru staff..."
         >
+      </div>
 
-    </div>
-
-    <div class="players-table">
-
-        <div class="players-header">
-
-            <div>ID</div>
-
-            <div>NUME</div>
-
-            <div>GRAD</div>
-
-            <div>ORE</div>
-
-            <div>TICKETE</div>
-
+      <div class="players-table">
+        <div class="players-header staff-grid">
+          <div>ID</div>
+          <div>NUME</div>
+          <div>GRAD</div>
+          <div>ORE</div>
+          <div>TICKETE</div>
         </div>
 
         <div id="staffContainer">
-
-            <div class="empty-state">
-                <h3>Se încarcă staff-ul...</h3>
-            </div>
-
+          <div class="empty-state">
+            <h3>Se încarcă staff-ul...</h3>
+          </div>
         </div>
-
-    </div>
-
-</section>
+      </div>
+    </section>
   </main>
 
   <script src="api.js"></script>
