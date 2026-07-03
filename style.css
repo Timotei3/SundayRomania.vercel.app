@@ -1528,3 +1528,12 @@ body.map-page .map-content{
     padding:16px;
   }
 }
+
+body.rules-page{
+  overflow-y:auto;
+  scrollbar-width:none;
+}
+
+body.rules-page::-webkit-scrollbar{
+  display:none;
+}
