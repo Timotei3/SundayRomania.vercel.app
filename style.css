@@ -1673,3 +1673,26 @@ body.map-page .map-content{
     color:#8d89a8;
 
 }
+
+.ban-header,
+.ban-row {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  align-items: center !important;
+}
+
+.ban-header div,
+.ban-row div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.ban-header {
+  height: 64px !important;
+  padding: 0 24px !important;
+  background: #11131c !important;
+  border-bottom: 1px solid #34345b !important;
+}
