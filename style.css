@@ -1502,26 +1502,174 @@ body.map-page .map-content{
   padding: 0 !important;
 }
 
-/* BANATI - identic cu Players */
+/*======================
+      BANATI
+=======================*/
 
-.players-header.bans-grid{
-  display:grid !important;
-  grid-template-columns:repeat(6, 1fr) !important;
-  align-items:center !important;
-  height:64px !important;
-  padding:0 24px !important;
+.ban-table{
+
+    background:#151521;
+
+    border:1px solid #403267;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
 }
 
-.players-header.bans-grid > div{
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-align:center !important;
-  height:100% !important;
-  white-space:nowrap !important;
-  word-break:normal !important;
+.ban-header{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    height:46px;
+
+    background:#11111a;
+
+    border-bottom:1px solid #403267;
+
 }
 
-.players-header.bans-grid + #banContainer{
-  min-height:170px;
+.ban-header div{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#b6b3d5;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+}
+
+.ban-row{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    min-height:58px;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+.ban-row div{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#fff;
+
+}
+
+.players-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.players-search{
+
+    width:340px;
+
+    height:48px;
+
+    background:#231d39;
+
+    border:1px solid #56359f;
+
+    border-radius:16px;
+
+    color:#fff;
+
+    padding:0 18px;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.25s;
+
+}
+
+.players-search:focus{
+
+    border-color:#8c5cff;
+
+    box-shadow:0 0 18px rgba(140,92,255,.25);
+
+}
+
+.empty-state{
+
+    min-height:230px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:#a9a5c9;
+
+}
+
+.empty-icon{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:50%;
+
+    background:#242236;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    margin-bottom:18px;
+
+}
+
+.empty-state h3{
+
+    font-size:22px;
+
+    margin-bottom:8px;
+
+    color:#d7d3ef;
+
+}
+
+.empty-state p{
+
+    color:#8d89a8;
+
 }
