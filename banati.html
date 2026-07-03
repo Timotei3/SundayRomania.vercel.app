@@ -128,14 +128,54 @@
       </div>
     </section>
 
-    <section class="ban-box">
-      <div id="banContainer">
-        <div class="empty-state">
-          <h3>Se încarcă banurile...</h3>
-          <p>Lista se actualizează automat.</p>
+    <section class="players-box">
+
+    <div class="players-title">
+
+        <h2>Jucători Banați</h2>
+
+        <input
+            type="text"
+            id="banSearch"
+            class="players-search"
+            placeholder="🔍 Caută ban..."
+        >
+
+    </div>
+
+    <div class="players-table">
+
+        <div class="players-header bans-grid">
+
+            <div>ID</div>
+
+            <div>JUCĂTOR</div>
+
+            <div>ADMIN</div>
+
+            <div>MOTIV</div>
+
+            <div>DATA BAN</div>
+
+            <div>EXPIRĂ</div>
+
         </div>
-      </div>
-    </section>
+
+        <div id="banContainer">
+
+            <div class="empty-state">
+
+                <h3>Se încarcă banurile...</h3>
+
+                <p>Lista se actualizează automat.</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
   </main>
 
   <script src="api.js"></script>
