@@ -1460,3 +1460,59 @@ body.map-page .map-content{
     padding:16px;
   }
 }
+
+.staff-header,
+.staff-row{
+  display:grid;
+  grid-template-columns:80px 2fr 220px 120px 120px;
+  align-items:center;
+}
+
+.staff-header{
+  background:#11131c;
+  color:#8f94ad;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:18px 24px;
+  border-bottom:1px solid #34345b;
+}
+
+.staff-row{
+  padding:16px 24px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  transition:.2s;
+}
+
+.staff-row:hover{
+  background:rgba(168,85,247,.08);
+}
+
+.staff-header div,
+.staff-row div{
+  text-align:center;
+  color:#d8d8f0;
+}
+
+.staff-row div:nth-child(2){
+  text-align:left;
+  color:#fff;
+  font-weight:700;
+}
+
+#staffContainer{
+  min-height:170px;
+}
+
+@media(max-width:900px){
+  .staff-header{
+    display:none;
+  }
+
+  .staff-row{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:16px;
+  }
+}
