@@ -407,8 +407,14 @@ button{
   position:sticky;
   top:0;
   height:100vh;
-  overflow:auto;
+  overflow-y:auto;
+  overflow-x:hidden;
   padding-top:62px;
+  scrollbar-width:none;
+}
+
+.rules-right::-webkit-scrollbar{
+  display:none;
 }
 
 .rules-right h4{
