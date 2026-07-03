@@ -293,9 +293,9 @@ button{
 
 .rules-layout{
   display:grid;
-  grid-template-columns:230px minmax(560px,760px) 250px;
+  grid-template-columns:230px minmax(560px,760px);
   gap:46px;
-  max-width:1260px;
+  max-width:1050px;
   margin:0 auto;
   padding:0 28px 70px;
 }
