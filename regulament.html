@@ -1171,6 +1171,42 @@
       </div>
 </nav>
 </div>
+
+          <script>
+  const rulesSearch = document.querySelector('.search');
+  const ruleBlocks = document.querySelectorAll('.rule-block');
+  const categoryLinks = document.querySelectorAll('.rules-left a');
+
+  if (rulesSearch) {
+    rulesSearch.addEventListener('input', () => {
+      const value = rulesSearch.value.toLowerCase().trim();
+
+      ruleBlocks.forEach(block => {
+        const text = block.innerText.toLowerCase();
+        const isMatch = text.includes(value);
+
+        block.style.display = !value || isMatch ? 'block' : 'none';
+      });
+
+      categoryLinks.forEach(link => {
+        const text = link.innerText.toLowerCase();
+        const isMatch = text.includes(value);
+
+        link.style.display = !value || isMatch ? 'block' : 'none';
+      });
+
+      if (value) {
+        const firstMatch = [...ruleBlocks].find(block => block.style.display !== 'none');
+
+        if (firstMatch) {
+          firstMatch.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    });
+  }
+</script>
 </body>
 </html>
-```
