@@ -404,16 +404,6 @@ button{
 }
 
 .rules-right{
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding-top:62px;
-  scrollbar-width:none;
-}
-
-.rules-right::-webkit-scrollbar{
   display:none;
 }
 
