@@ -1501,3 +1501,27 @@ body.map-page .map-content{
   font-size: 12px !important;
   padding: 0 !important;
 }
+
+/* BANATI - identic cu Players */
+
+.players-header.bans-grid{
+  display:grid !important;
+  grid-template-columns:repeat(6, 1fr) !important;
+  align-items:center !important;
+  height:64px !important;
+  padding:0 24px !important;
+}
+
+.players-header.bans-grid > div{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  height:100% !important;
+  white-space:nowrap !important;
+  word-break:normal !important;
+}
+
+.players-header.bans-grid + #banContainer{
+  min-height:170px;
+}
