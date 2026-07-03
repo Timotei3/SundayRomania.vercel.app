@@ -1205,3 +1205,24 @@ body.map-page .map-content{
   color: #ddd;
   margin-top: 2px;
 }
+
+.players-header{
+    display:grid;
+    grid-template-columns:80px 2fr 180px 100px 80px;
+
+    align-items:center;
+
+    background:#11131c;
+
+    color:#8f94ad;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    padding:18px 20px;
+
+    border-bottom:1px solid #34345b;
+}
