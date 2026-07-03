@@ -710,9 +710,9 @@ textarea{
 
 .players-header,
 .staff-row{
-
-grid-template-columns:70px 2fr 170px 100px 100px;
-
+    display:grid;
+    grid-template-columns:90px 2.5fr 220px 130px 130px;
+    align-items:center;
 }
 
 .turf {
