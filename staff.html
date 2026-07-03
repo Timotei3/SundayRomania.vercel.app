@@ -41,18 +41,52 @@
       <div class="text">
         <b>SUNDAY ROMANIA</b>
         <h2>Echipa Administrativă</h2>
-        <p>Lista staff-ului online, gradele, orele și ticketele făcute.</p>
+        <p>Lista staff-ului online.</p>
       </div>
     </section>
 
-    <section class="staff-panel">
-      <div id="staffContainer">
-        <section class="staff-rank">
-          <h2>Staff</h2>
-          <p>Se încarcă lista staff...</p>
-        </section>
-      </div>
-    </section>
+    <section class="players-box">
+
+    <div class="players-title">
+
+        <h2>Staff Members</h2>
+
+        <input
+            type="text"
+            id="staffSearch"
+            class="players-search"
+            placeholder="🔍 Caută membru staff..."
+        >
+
+    </div>
+
+    <div class="players-table">
+
+        <div class="players-header">
+
+            <div>ID</div>
+
+            <div>NUME</div>
+
+            <div>GRAD</div>
+
+            <div>ORE</div>
+
+            <div>TICKETE</div>
+
+        </div>
+
+        <div id="staffContainer">
+
+            <div class="empty-state">
+                <h3>Se încarcă staff-ul...</h3>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
   </main>
 
   <script src="api.js"></script>
