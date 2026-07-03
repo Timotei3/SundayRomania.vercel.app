@@ -533,12 +533,18 @@ textarea{
 }
 
 
-.staff-panel{
-    background:#1c1b33;
-    border:1px solid #34345b;
-    border-radius:14px;
-    padding:25px;
-    margin-bottom:22px;
+.players-box{
+
+    background:#241f3d;
+
+    border:1px solid #4b3d73;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    margin-bottom:25px;
+
 }
 
 .players-title{
