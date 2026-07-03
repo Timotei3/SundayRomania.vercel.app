@@ -102,31 +102,63 @@
   </aside>
 
   <main>
+
     <header>
-      <h2>Players</h2>
-      <a class="discord-btn" href="index.html">Dashboard</a>
+        <h2>Players</h2>
+        <a class="discord-btn" href="index.html">Dashboard</a>
     </header>
 
     <section class="news">
-      <div class="img">PLAYERS</div>
-      <div class="text">
-        <b>LIVE</b>
-        <h2>Jucători Online</h2>
-        <p>ID în joc, nume FiveM, facțiune și ore pe server.</p>
-      </div>
+
+        <div class="img">
+            PLAYERS
+        </div>
+
+        <div class="text">
+            <b>LIVE</b>
+            <h2>Jucători Online</h2>
+            <p>Lista jucătorilor conectați pe server.</p>
+        </div>
+
     </section>
 
     <section class="players-box">
-      <h2>Jucători Online</h2>
-      <div id="playersContainer" class="players-table">
-        <div class="empty-state">
-          <h3>Se încarcă jucătorii...</h3>
-          <p>Lista se actualizează automat.</p>
-        </div>
-      </div>
-    </section>
-  </main>
 
-  <script src="api.js"></script>
+        <h2>Jucători Online</h2>
+
+        <div class="players-table">
+
+            <div class="players-header">
+
+                <div>ID</div>
+
+                <div>JUCĂTOR</div>
+
+                <div>FACȚIUNE</div>
+
+                <div>ORE</div>
+
+                <div>PING</div>
+
+            </div>
+
+            <div id="playersContainer">
+
+                <div class="empty-state">
+
+                    <h3>Se încarcă jucătorii...</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="api.js"></script>
+
 </body>
 </html>
