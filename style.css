@@ -715,6 +715,8 @@ textarea{
     align-items:center;
 }
 
+}
+
 .turf {
   position: absolute;
   border: 3px solid;
@@ -1395,8 +1397,6 @@ body.map-page .map-content{
 
 }
 
-/* BANATI - exact ca players.html */
-
 .ban-table{
   width:100%;
   border:1px solid #34345b;
@@ -1407,57 +1407,56 @@ body.map-page .map-content{
 
 .ban-header,
 .ban-row{
-  display:grid !important;
-  grid-template-columns:repeat(6, 1fr) !important;
-  align-items:center !important;
+  display:grid;
+  grid-template-columns:80px 1.4fr 1.4fr 2fr 1.2fr 1.2fr;
+  align-items:center;
 }
 
 .ban-header{
-  height:64px;
   background:#11131c;
+  color:#8f94ad;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:18px 24px;
   border-bottom:1px solid #34345b;
 }
 
-.ban-header div,
-.ban-row div{
-  display:flex !important;
-  justify-content:center !important;
-  align-items:center !important;
-  text-align:center !important;
-  white-space:nowrap !important;
-  color:#b6b3d5;
-}
-
 .ban-row{
-  min-height:58px;
+  padding:16px 24px;
   border-bottom:1px solid rgba(255,255,255,.06);
-  color:#fff;
+  transition:.2s;
 }
 
 .ban-row:hover{
   background:rgba(168,85,247,.08);
 }
 
-#banContainer{
-  min-height:230px;
-}
-
-.empty-state{
-  min-height:230px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:#a9a5c9;
+.ban-header div,
+.ban-row div{
   text-align:center;
+  color:#d8d8f0;
 }
 
-.empty-state h3{
-  font-size:22px;
-  margin-bottom:8px;
-  color:#d7d3ef;
+.ban-row div:nth-child(2){
+  text-align:left;
+  color:#fff;
+  font-weight:700;
 }
 
-.empty-state p{
-  color:#8d89a8;
+#banContainer{
+  min-height:170px;
+}
+
+@media(max-width:900px){
+  .ban-header{
+    display:none;
+  }
+
+  .ban-row{
+    grid-template-columns:1fr;
+    gap:8px;
+    padding:16px;
+  }
 }
