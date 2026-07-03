@@ -1395,304 +1395,69 @@ body.map-page .map-content{
 
 }
 
-  /* FIX FINAL - tabele egale */
-
-.players-header,
-.player-row,
-.staff-row {
-  display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
-  align-items: center !important;
-}
-
-.players-header div,
-.player-row div,
-.staff-row div {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-
-.player-row,
-.staff-row {
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  transition: .2s;
-}
-
-.player-row:hover,
-.staff-row:hover {
-  background: rgba(168,85,247,.08);
-}
-
-.bans-head,
-.bans-row,
-.ban-row {
-  display: grid !important;
-  grid-template-columns: repeat(6, 1fr) !important;
-  align-items: center !important;
-}
-
-.bans-head div,
-.bans-row div,
-.ban-row div {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-
-.bans-grid,
-.ban-row,
-.bans-row {
-  display: grid !important;
-  grid-template-columns: repeat(6, 1fr) !important;
-  align-items: center !important;
-}
-
-.bans-grid div,
-.ban-row div,
-.bans-row div {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-}
-
-.ban-row,
-.bans-row {
-  padding: 16px 24px;
-  border-bottom: 1px solid rgba(255,255,255,.06);
-  transition: .2s;
-}
-
-.ban-row:hover,
-.bans-row:hover {
-  background: rgba(168,85,247,.08);
-}
-
-/* FIX FINAL BANATI - tabel 6 coloane egale */
-
-.players-header.bans-grid,
-.players-header.bans-grid + #banContainer .ban-row,
-.players-header.bans-grid + #banContainer .bans-row {
-  display: grid !important;
-  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
-  align-items: center !important;
-}
-
-.players-header.bans-grid > div,
-.players-header.bans-grid + #banContainer .ban-row > div,
-.players-header.bans-grid + #banContainer .bans-row > div {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  text-align: center !important;
-  white-space: nowrap !important;
-  min-width: 0 !important;
-}
-
-.players-header.bans-grid {
-  gap: 0 !important;
-}
-
-.players-header.bans-grid > div {
-  font-size: 12px !important;
-  padding: 0 !important;
-}
-
-/*======================
-      BANATI
-=======================*/
+/* BANATI - exact ca players.html */
 
 .ban-table{
-
-    background:#151521;
-
-    border:1px solid #403267;
-
-    border-radius:16px;
-
-    overflow:hidden;
-
-}
-
-.ban-header{
-
-    display:grid;
-
-    grid-template-columns:repeat(6,1fr);
-
-    height:46px;
-
-    background:#11111a;
-
-    border-bottom:1px solid #403267;
-
-}
-
-.ban-header div{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    color:#b6b3d5;
-
-    font-size:12px;
-
-    font-weight:700;
-
-    letter-spacing:.08em;
-
-    text-transform:uppercase;
-
-}
-
-.ban-row{
-
-    display:grid;
-
-    grid-template-columns:repeat(6,1fr);
-
-    min-height:58px;
-
-    border-bottom:1px solid rgba(255,255,255,.05);
-
-}
-
-.ban-row div{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    color:#fff;
-
-}
-
-.players-title{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
-}
-
-.players-search{
-
-    width:340px;
-
-    height:48px;
-
-    background:#231d39;
-
-    border:1px solid #56359f;
-
-    border-radius:16px;
-
-    color:#fff;
-
-    padding:0 18px;
-
-    font-size:15px;
-
-    outline:none;
-
-    transition:.25s;
-
-}
-
-.players-search:focus{
-
-    border-color:#8c5cff;
-
-    box-shadow:0 0 18px rgba(140,92,255,.25);
-
-}
-
-.empty-state{
-
-    min-height:230px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    color:#a9a5c9;
-
-}
-
-.empty-icon{
-
-    width:56px;
-
-    height:56px;
-
-    border-radius:50%;
-
-    background:#242236;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:28px;
-
-    margin-bottom:18px;
-
-}
-
-.empty-state h3{
-
-    font-size:22px;
-
-    margin-bottom:8px;
-
-    color:#d7d3ef;
-
-}
-
-.empty-state p{
-
-    color:#8d89a8;
-
+  width:100%;
+  border:1px solid #34345b;
+  border-radius:12px;
+  overflow:hidden;
+  background:#161823;
 }
 
 .ban-header,
-.ban-row {
-  display: grid !important;
-  grid-template-columns: repeat(6, 1fr) !important;
-  align-items: center !important;
+.ban-row{
+  display:grid !important;
+  grid-template-columns:repeat(6, 1fr) !important;
+  align-items:center !important;
+}
+
+.ban-header{
+  height:64px;
+  background:#11131c;
+  border-bottom:1px solid #34345b;
 }
 
 .ban-header div,
-.ban-row div {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  white-space: nowrap !important;
+.ban-row div{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+  color:#b6b3d5;
 }
 
-.ban-header {
-  height: 64px !important;
-  padding: 0 24px !important;
-  background: #11131c !important;
-  border-bottom: 1px solid #34345b !important;
+.ban-row{
+  min-height:58px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  color:#fff;
+}
+
+.ban-row:hover{
+  background:rgba(168,85,247,.08);
+}
+
+#banContainer{
+  min-height:230px;
+}
+
+.empty-state{
+  min-height:230px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#a9a5c9;
+  text-align:center;
+}
+
+.empty-state h3{
+  font-size:22px;
+  margin-bottom:8px;
+  color:#d7d3ef;
+}
+
+.empty-state p{
+  color:#8d89a8;
 }
