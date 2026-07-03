@@ -5,89 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jucători Banați | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    .ban-box{
-      background:#11131c;
-      border:1px solid #252840;
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .bans-head,
-    .bans-row{
-      display:grid;
-      grid-template-columns:110px 1.2fr 1.5fr 1.4fr 1fr 1fr;
-      align-items:center;
-    }
-
-    .bans-head{
-      min-height:42px;
-      background:#0f111a;
-      color:#9ca8ff;
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-    }
-
-    .bans-head div,
-    .bans-row div{
-      padding:14px 16px;
-    }
-
-    .bans-row{
-      min-height:54px;
-      border-top:1px solid rgba(255,255,255,0.06);
-      background:#11131c;
-      color:#fff;
-      font-size:13px;
-    }
-
-    .ban-id{
-      color:#8fa2ff;
-    }
-
-    .ban-player{
-      color:#4d7cff;
-      font-weight:700;
-    }
-
-    .ban-admin{
-      font-weight:800;
-    }
-
-    .permanent{
-      display:inline-block;
-      padding:5px 10px;
-      border-radius:6px;
-      border:1px solid #ff4444;
-      color:#ff6b6b;
-      font-size:10px;
-      font-weight:800;
-    }
-
-    .empty-state{
-      min-height:170px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#8f94ad;
-      text-align:center;
-    }
-
-    @media(max-width:1000px){
-      .bans-head{
-        display:none;
-      }
-
-      .bans-row{
-        grid-template-columns:1fr;
-        gap:4px;
-        padding:12px 0;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -121,64 +38,47 @@
     </header>
 
     <section class="news">
-      <div class="img">BAN</div>
+      <div class="img">
+        BAN
+      </div>
+
       <div class="text">
         <b>SUNDAY ROMANIA</b>
         <h2>Lista jucătorilor banați</h2>
+        <p>Lista jucătorilor sancționați pe server.</p>
       </div>
     </section>
 
     <section class="players-box">
-
-    <div class="players-title">
-
+      <div class="players-title">
         <h2>Jucători Banați</h2>
 
         <input
-            type="text"
-            id="banSearch"
-            class="players-search"
-            placeholder="🔍 Caută ban..."
+          type="text"
+          id="banSearch"
+          class="players-search"
+          placeholder="🔍 Caută ban..."
         >
+      </div>
 
-    </div>
-
-    <div class="ban-table">
-  <div class="ban-header">
-    <div>ID</div>
-    <div>JUCĂTOR</div>
-    <div>ADMIN</div>
-    <div>MOTIV</div>
-    <div>DATA BAN</div>
-    <div>EXPIRĂ</div>
-  </div>
-
-  <div id="banContainer">
-    <div class="empty-state">
-      <h3>Se încarcă banurile...</h3>
-      <p>Lista se actualizează automat.</p>
-    </div>
-  </div>
-</div>
-
-        <div id="banContainer">
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                </div>
-
-                <h3>Se încarcă banurile...</h3>
-
-   
-
-            </div>
-
+      <div class="ban-table">
+        <div class="ban-header">
+          <div>ID</div>
+          <div>JUCĂTOR</div>
+          <div>ADMIN</div>
+          <div>MOTIV</div>
+          <div>DATA BAN</div>
+          <div>EXPIRĂ</div>
         </div>
 
-    </div>
-
-</section>
+        <div id="banContainer">
+          <div class="empty-state">
+            <h3>Se încarcă banurile...</h3>
+            <p>Lista se actualizează automat.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="api.js"></script>
