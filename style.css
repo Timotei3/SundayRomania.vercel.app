@@ -1425,3 +1425,20 @@ body.map-page .map-content{
 .staff-row:hover {
   background: rgba(168,85,247,.08);
 }
+
+.bans-head,
+.bans-row,
+.ban-row {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  align-items: center !important;
+}
+
+.bans-head div,
+.bans-row div,
+.ban-row div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
