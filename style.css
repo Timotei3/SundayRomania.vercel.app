@@ -1442,3 +1442,32 @@ body.map-page .map-content{
   align-items: center !important;
   text-align: center !important;
 }
+
+.bans-grid,
+.ban-row,
+.bans-row {
+  display: grid !important;
+  grid-template-columns: repeat(6, 1fr) !important;
+  align-items: center !important;
+}
+
+.bans-grid div,
+.ban-row div,
+.bans-row div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.ban-row,
+.bans-row {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  transition: .2s;
+}
+
+.ban-row:hover,
+.bans-row:hover {
+  background: rgba(168,85,247,.08);
+}
