@@ -1715,3 +1715,26 @@ main > .news:first-of-type .img{
         font-size:15px !important;
     }
 }
+
+.staff-header,
+.staff-row{
+  grid-template-columns:80px 2.7fr 140px 220px 120px 120px;
+}
+
+.staff-header div:nth-child(2),
+.staff-row div:nth-child(2){
+  text-align:left;
+  padding-left:34px;
+}
+
+.staff-row div:nth-child(3){
+  font-weight:700;
+}
+
+.staff-row div:nth-child(3){
+  color:#ff6b6b;
+}
+
+.staff-row div:nth-child(3):has(+ div){
+  text-align:center;
+}
