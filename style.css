@@ -247,58 +247,7 @@ button{
     font-weight:800;
 }
 
-.img{
-  background:linear-gradient(180deg,#a600ff,#7b00d4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:34px;
-  font-weight:800;
-  line-height:1.1;
-  padding:20px;
-}
 
-.img.logo{
-  font-size:42px;
-}
-
-.text{
-  padding:28px;
-}
-
-.text b{
-  display:inline-block;
-  background:#913d4c;
-  color:#ffd6d6;
-  padding:6px 10px;
-  border-radius:5px;
-  font-size:11px;
-  margin-bottom:15px;
-}
-
-.text h2{
-  font-size:26px;
-  font-weight:800;
-  margin-bottom:16px;
-}
-
-.text p,
-.text li{
-  color:#ddd;
-  font-size:16px;
-  line-height:1.7;
-}
-
-.text ul{
-  margin-left:20px;
-}
-
-.text span{
-  display:inline-block;
-  margin-top:18px;
-  color:#9ca8ff;
-}
 
 /* MAGAZIN */
 .shop-categories{
@@ -1608,4 +1557,26 @@ body.rules-page{
 
 body.rules-page::-webkit-scrollbar{
   display:none;
+}
+
+.welcome-card h2{
+    font-size:42px;
+    font-weight:900;
+    margin-bottom:35px;
+}
+
+.welcome-card p{
+    font-size:18px;
+    line-height:2;
+    margin-bottom:30px;
+    color:#ddd7f0;
+}
+
+.welcome-footer{
+    margin-top:40px;
+    padding-top:25px;
+    border-top:1px solid rgba(255,255,255,.08);
+
+    font-size:24px;
+    font-weight:800;
 }
