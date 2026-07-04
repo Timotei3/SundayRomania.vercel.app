@@ -156,13 +156,95 @@ button{
 /* PANELS */
 .news,
 .panel{
-  display:grid;
-  grid-template-columns:30% 70%;
-  background:#1c1b33;
-  border:1px solid #34345b;
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:20px;
+    width:100%;
+    min-height:500px;
+
+    display:block;
+
+    background:linear-gradient(
+        135deg,
+        #1c1b33 0%,
+        #19172e 100%
+    );
+
+    border:1px solid rgba(168,85,247,.22);
+    border-radius:18px;
+
+    padding:50px 60px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.35),
+        inset 0 0 0 1px rgba(255,255,255,.02);
+}
+
+/* ascunde partea mov */
+.img{
+    display:none;
+}
+
+.text{
+    padding:0;
+}
+
+.text b{
+
+    display:inline-flex;
+    align-items:center;
+
+    background:#7c3aed;
+
+    color:#fff;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+}
+
+.text h2{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    margin-bottom:30px;
+
+    color:#fff;
+}
+
+.text p{
+
+    color:#d8d8ea;
+
+    font-size:18px;
+
+    line-height:2;
+
+    margin-bottom:22px;
+}
+
+.text strong{
+    color:#ffffff;
+}
+
+.text span{
+
+    display:block;
+
+    margin-top:35px;
+
+    color:#ffffff;
+
+    font-size:24px;
+
+    font-weight:800;
 }
 
 .img{
