@@ -1765,3 +1765,11 @@ main > .news:first-of-type .img{
   height:0;
   display:none;
 }
+
+.news{
+  margin-bottom:42px;
+}
+
+.players-box{
+  margin-top:24px;
+}
