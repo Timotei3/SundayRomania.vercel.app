@@ -5,76 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Players | Sunday Romania</title>
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    .players-box{
-      background:#1c1b33;
-      border:1px solid #34345b;
-      border-radius:14px;
-      padding:25px;
-      margin-bottom:22px;
-    }
-
-    .players-box h2{
-      color:#fff;
-      font-size:26px;
-      margin-bottom:18px;
-    }
-
-    .players-table{
-      margin-top:12px;
-    }
-
-    .player-row{
-      display:grid;
-      grid-template-columns:110px 1fr 220px 140px;
-      align-items:center;
-      min-height:56px;
-      padding:0 18px;
-      background:rgba(255,255,255,0.03);
-      border-bottom:1px solid rgba(255,255,255,0.06);
-      border-left:3px solid #a855f7;
-    }
-
-    .player-id,
-    .player-hours{
-      color:#d8d8f0;
-    }
-
-    .player-name{
-      color:#fff;
-      font-weight:700;
-    }
-
-    .player-faction{
-      width:fit-content;
-      padding:6px 12px;
-      border:1px solid #a855f7;
-      border-radius:8px;
-      text-transform:uppercase;
-      font-size:11px;
-      letter-spacing:1px;
-      color:#fff;
-    }
-
-    .empty-state{
-      min-height:170px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      color:#8f94ad;
-      text-align:center;
-    }
-
-    @media(max-width:900px){
-      .player-row{
-        grid-template-columns:1fr;
-        gap:8px;
-        padding:16px;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -102,74 +32,53 @@
   </aside>
 
   <main>
-
     <header>
-        <h2>Players</h2>
-        <a class="discord-btn" href="index.html">Dashboard</a>
+      <h2>Players</h2>
+      <a class="discord-btn" href="index.html">Dashboard</a>
     </header>
 
     <section class="news">
+      <div class="img">
+        PLAYERS
+      </div>
 
-        <div class="img">
-            PLAYERS
-        </div>
-
-        <div class="text">
-            <b>LIVE</b>
-            <h2>Jucători Online</h2>
-            <p>Lista jucătorilor conectați pe server.</p>
-        </div>
-
+      <div class="text">
+        <b>LIVE</b>
+        <h2>Jucători Online</h2>
+        <p>Lista jucătorilor conectați pe server.</p>
+      </div>
     </section>
 
     <section class="players-box">
+      <div class="players-title">
+        <h2>Jucători Online</h2>
 
-        <div class="players-title">
+        <input
+          type="text"
+          id="playerSearch"
+          class="players-search"
+          placeholder="🔍 Caută jucător..."
+        >
+      </div>
 
-    <h2>Jucători Online</h2>
-
-    <input
-        type="text"
-        id="playerSearch"
-        class="players-search"
-        placeholder="🔍 Caută jucător..."
-    >
-
-</div>
-
-        <div class="players-table">
-
-            <div class="players-header">
-
-                <div>ID</div>
-
-                <div>JUCĂTOR</div>
-
-                <div>FACȚIUNE</div>
-
-                <div>ORE</div>
-
-                <div>PING</div>
-
-            </div>
-
-            <div id="playersContainer">
-
-                <div class="empty-state">
-
-                    <h3>Se încarcă jucătorii...</h3>
-
-                </div>
-
-            </div>
-
+      <div class="players-table">
+        <div class="players-header">
+          <div>ID</div>
+          <div>JUCĂTOR</div>
+          <div>FACȚIUNE</div>
+          <div>ORE</div>
+          <div>PING</div>
         </div>
 
+        <div id="playersContainer">
+          <div class="empty-state">
+            <h3>Se încarcă jucătorii...</h3>
+          </div>
+        </div>
+      </div>
     </section>
+  </main>
 
-</main>
-
-<script src="api.js"></script>
-
+  <script src="api.js"></script>
 </body>
 </html>
