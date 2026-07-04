@@ -1822,3 +1822,10 @@ main > .news:first-of-type .img{
     grid-template-columns:1fr;
   }
 }
+
+.search,
+#search,
+input[type="search"],
+input[placeholder="Search..."]{
+  margin-top:35px;
+}
