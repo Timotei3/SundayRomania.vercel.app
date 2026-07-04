@@ -124,15 +124,16 @@ function renderStaff(staff) {
     return;
   }
 
-  container.innerHTML = staff.map(member => `
-    <div class="staff-row">
-      <div>${escapeHtml(member.id ?? member.user_id ?? "-")}</div>
-      <div>${escapeHtml(member.name ?? "Staff")}</div>
-      <div>${escapeHtml(member.grade ?? member.grad ?? member.level ?? "Staff")}</div>
-      <div>${escapeHtml(member.hours ?? member.ore ?? 0)}</div>
-      <div>${escapeHtml(member.tickets ?? 0)}</div>
-    </div>
-  `).join("");
+ container.innerHTML = staff.map(member => `
+  <div class="staff-row">
+    <div>${escapeHtml(member.id ?? member.user_id ?? "-")}</div>
+    <div>${escapeHtml(member.name ?? "Staff")}</div>
+    <div>${escapeHtml(member.status ?? "Offline")}</div>
+    <div>${escapeHtml(member.grade ?? member.grad ?? member.level ?? "Staff")}</div>
+    <div>${escapeHtml(member.hours ?? member.ore ?? 0)}</div>
+    <div>${escapeHtml(member.tickets ?? 0)}</div>
+  </div>
+`).join("");
 }
 
 /* BANS */
