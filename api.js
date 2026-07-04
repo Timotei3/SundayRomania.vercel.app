@@ -83,7 +83,7 @@ function renderPlayers(players) {
 
   container.innerHTML = players.map(player => `
     <div class="player-row">
-      <div>${escapeHtml(player.id ?? player.user_id ?? "-")}</div>
+      <div>${escapeHtml(player.user_id ?? player.id ?? "-")}</div>
       <div>${escapeHtml(player.name ?? player.fivemName ?? "Player")}</div>
       <div>${escapeHtml(player.faction ?? player.factiune ?? "Civil")}</div>
       <div>${escapeHtml(player.hours ?? player.ore ?? 0)}</div>
