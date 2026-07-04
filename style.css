@@ -1656,3 +1656,30 @@ body.rules-page::-webkit-scrollbar{
     font-size:19px;
     color:#d5d5e9;
 }
+
+.page-hero,
+.hero,
+.ban-hero,
+.players-hero,
+.staff-hero{
+    min-height:220px !important;
+    padding:35px 60px !important;
+}
+
+.page-hero h1,
+.hero h1,
+.ban-hero h1,
+.players-hero h1,
+.staff-hero h1{
+    font-size:38px !important;
+    margin-bottom:14px !important;
+}
+
+.page-hero p,
+.hero p,
+.ban-hero p,
+.players-hero p,
+.staff-hero p{
+    font-size:16px !important;
+    line-height:1.5 !important;
+}
