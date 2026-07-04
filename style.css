@@ -1748,14 +1748,20 @@ main > .news:first-of-type .img{
   -ms-overflow-style:none;
 }
 
+#playersContainer,
+#staffContainer,
+#banContainer{
+  max-height:392px;
+  overflow-y:auto !important;
+  overflow-x:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+
 #playersContainer::-webkit-scrollbar,
 #staffContainer::-webkit-scrollbar,
 #banContainer::-webkit-scrollbar{
-  display:none;
-}
-
-#playersContainer .player-row:nth-child(n+8),
-#staffContainer .staff-row:nth-child(n+8),
-#banContainer .ban-row:nth-child(n+8){
+  width:0;
+  height:0;
   display:none;
 }
