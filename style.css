@@ -1738,3 +1738,24 @@ main > .news:first-of-type .img{
 .staff-row div:nth-child(3):has(+ div){
   text-align:center;
 }
+
+#playersContainer,
+#staffContainer,
+#banContainer{
+  max-height:392px;
+  overflow:hidden !important;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+
+#playersContainer::-webkit-scrollbar,
+#staffContainer::-webkit-scrollbar,
+#banContainer::-webkit-scrollbar{
+  display:none;
+}
+
+#playersContainer .player-row:nth-child(n+8),
+#staffContainer .staff-row:nth-child(n+8),
+#banContainer .ban-row:nth-child(n+8){
+  display:none;
+}
