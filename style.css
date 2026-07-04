@@ -157,7 +157,7 @@ button{
 .news,
 .panel{
     width:100%;
-    min-height:500px;
+    min-height:240px;
 
     display:block;
 
@@ -170,7 +170,7 @@ button{
     border:1px solid rgba(168,85,247,.22);
     border-radius:18px;
 
-    padding:50px 60px;
+    padding:38px 60px;
 
     overflow:hidden;
 
@@ -1582,32 +1582,136 @@ body.rules-page::-webkit-scrollbar{
 }
 
 /* =========================
-   HERO PAGINI (Players, Staff, Banati)
+   FIX FINAL - HERO PAGINI
+   Se aplică pe Players, Staff și Jucători Banați.
+   Pune acest bloc ultimul în style.css.
 ========================= */
 
 .page-hero,
 .hero,
 .ban-hero,
 .players-hero,
-.staff-hero{
-    min-height:100px !important;
-    padding:35px 60px !important;
+.staff-hero,
+.news.hero,
+.panel.hero{
+    position:relative !important;
+    min-height:220px !important;
+    padding:34px 60px !important;
+    margin-bottom:20px !important;
+
+    overflow:hidden !important;
+    border-radius:18px !important;
+
+    background:
+        radial-gradient(circle at top right, rgba(168,85,247,.16), transparent 42%),
+        linear-gradient(135deg,#211a39,#1b1730) !important;
+
+    border:1px solid rgba(168,85,247,.28) !important;
+    box-shadow:0 12px 30px rgba(0,0,0,.30) !important;
 }
 
+/* Dacă hero-ul este făcut cu .panel sau .news simplu, îl micșorează */
+main > .panel:first-of-type,
+main > .news:first-of-type{
+    min-height:220px !important;
+    padding:34px 60px !important;
+}
+
+/* Badge mov */
+.page-badge,
+.hero-badge,
+.ban-hero .badge,
+.players-hero .badge,
+.staff-hero .badge,
+.page-hero .badge,
+.panel .badge,
+.news .badge{
+    display:inline-block !important;
+    padding:7px 15px !important;
+    margin-bottom:22px !important;
+
+    background:#8b5cf6 !important;
+    color:#fff !important;
+
+    border-radius:9px !important;
+
+    font-size:11px !important;
+    font-weight:800 !important;
+    letter-spacing:.8px !important;
+}
+
+/* Titlu hero */
 .page-hero h1,
 .hero h1,
 .ban-hero h1,
 .players-hero h1,
-.staff-hero h1{
-    font-size:38px !important;
-    margin-bottom:14px !important;
+.staff-hero h1,
+main > .panel:first-of-type h1,
+main > .news:first-of-type h1{
+    font-size:40px !important;
+    line-height:1.1 !important;
+    font-weight:900 !important;
+    margin:0 0 14px 0 !important;
+    color:#fff !important;
 }
 
+/* Text hero */
 .page-hero p,
 .hero p,
 .ban-hero p,
 .players-hero p,
-.staff-hero p{
+.staff-hero p,
+main > .panel:first-of-type p,
+main > .news:first-of-type p{
     font-size:16px !important;
-    line-height:1.5 !important;
+    line-height:1.6 !important;
+    color:#d8d8ea !important;
+    margin:0 !important;
+    max-width:850px !important;
+}
+
+/* Repară vechiul .text dacă hero-ul folosește panel/news */
+main > .panel:first-of-type .text,
+main > .news:first-of-type .text{
+    padding:0 !important;
+}
+
+/* Ascunde blocul mov vechi din stânga */
+main > .panel:first-of-type .img,
+main > .news:first-of-type .img{
+    display:none !important;
+}
+
+/* Responsive */
+@media(max-width:800px){
+    .page-hero,
+    .hero,
+    .ban-hero,
+    .players-hero,
+    .staff-hero,
+    main > .panel:first-of-type,
+    main > .news:first-of-type{
+        min-height:auto !important;
+        padding:28px 24px !important;
+    }
+
+    .page-hero h1,
+    .hero h1,
+    .ban-hero h1,
+    .players-hero h1,
+    .staff-hero h1,
+    main > .panel:first-of-type h1,
+    main > .news:first-of-type h1{
+        font-size:32px !important;
+    }
+
+    .page-hero p,
+    .hero p,
+    .ban-hero p,
+    .players-hero p,
+    .staff-hero p,
+    main > .panel:first-of-type p,
+    main > .news:first-of-type p{
+        font-size:15px !important;
+    }
 }
