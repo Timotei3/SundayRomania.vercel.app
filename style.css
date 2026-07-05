@@ -1829,3 +1829,15 @@ input[type="search"],
 input[placeholder="Search..."]{
   margin-top:35px;
 }
+
+.staff-status{
+  font-weight:800;
+}
+
+.staff-status.online{
+  color:#22c55e !important;
+}
+
+.staff-status.offline{
+  color:#ff6b6b !important;
+}
