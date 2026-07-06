@@ -87,6 +87,7 @@
       <p id="selectedFaction">Facțiune: -</p>
 
       <input id="appName" placeholder="Numele tău IC">
+      <input id="appID" placeholder="ID-ul tau in joc">
       <input id="appDiscord" placeholder="Nume Discord / Discord ID">
       <input id="appAge" placeholder="Vârsta ta">
       <textarea id="appReason" placeholder="De ce vrei să intri în această facțiune?"></textarea>
@@ -128,9 +129,9 @@ const webhooks = {
 };
 
 const legalFactions = [
-  {name:"Poliția", members:5, max:100, icon:"🛡️", cls:"police"},
-  {name:"Smurd", members:2, max:50, icon:"🚑", cls:"smurd"},
-  {name:"Mecanic", members:0, max:30, icon:"🔧", cls:"mecanic"}
+  {name:"Poliția", members:4, max:100, icon:"👮", cls:"police"},
+  {name:"Smurd", members:1, max:50, icon:"🚑", cls:"smurd"},
+  {name:"Mecanic", members:3, max:30, icon:"🔧", cls:"mecanic"}
 ];
 
 const illegalFactions = [
@@ -203,8 +204,10 @@ async function sendApplication(){
   const webhook = webhooks[currentFaction];
   const status = document.getElementById("applyStatus");
 
-  const name = document.getElementById("appName").value.trim();
+    
+
   const discord = document.getElementById("appDiscord").value.trim();
+  const idgame = document.getElementById("appID").value.trim();
   const age = document.getElementById("appAge").value.trim();
   const reason = document.getElementById("appReason").value.trim();
   const experience = document.getElementById("appExperience").value.trim();
@@ -214,7 +217,7 @@ async function sendApplication(){
     return;
   }
 
-  if(!name || !discord || !age || !reason || !experience){
+  if(!name || !idgame || !discord || !age || !reason || !experience){
     status.innerText = "Completează toate câmpurile.";
     return;
   }
@@ -233,6 +236,7 @@ async function sendApplication(){
           fields:[
             {name:"Facțiune", value:currentFaction, inline:true},
             {name:"Nume IC", value:name, inline:true},
+            {name:"ID joc", value:idgame, inline:true},
             {name:"Discord", value:discord, inline:true},
             {name:"Vârstă", value:age, inline:true},
             {name:"Motiv", value:reason},
@@ -247,6 +251,7 @@ async function sendApplication(){
 
     status.innerText = "Aplicația a fost trimisă!";
     document.getElementById("appName").value = "";
+    document.getElementById("appID").value = "";
     document.getElementById("appDiscord").value = "";
     document.getElementById("appAge").value = "";
     document.getElementById("appReason").value = "";
